@@ -58,22 +58,27 @@
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
                         <RowDefinition Height="10*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+                        <TextBlock Text="Адрес отправителя:" Margin="2"/>
+                        <TextBox Name="TextBoxFrom" Width="200" Margin="2" Text="kanadeiar@gmail.com"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
                         <TextBlock Text="Адрес получателя:" Margin="2"/>
                         <TextBox Name="TextBoxTo" Width="200" Margin="2" Text="kanadei@mail.ru"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="2">
                         <TextBlock Text="Тема сообщения:" Margin="2"/>
                         <TextBox Name="TextBoxSubject" Width="300" Margin="2" Text="Заголовок сообщения"/>
                     </StackPanel>
-                    <DockPanel Grid.Column="0" Grid.Row="2">
+                    <DockPanel Grid.Column="0" Grid.Row="3">
                         <TextBlock Text="Сообщение:" Margin="2" DockPanel.Dock="Top"/>
                         <TextBox Name="TextBoxBody" Text="Текст сообщения" Margin="2" VerticalScrollBarVisibility="Visible" TextWrapping="Wrap"/>
                     </DockPanel>
-                    <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal">
+                    <StackPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal">
                         <Button Name="ButtonSend" Content="Отправить!" Margin="2" Width="100" Click="ButtonSend_Click"/>
                         <Button Name="ButtonClear" Content="Очистить" Margin="2" Width="100" Click="ButtonClear_Click"/>
                     </StackPanel>

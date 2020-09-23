@@ -19,9 +19,9 @@ namespace WpfMailSender
             _login = login;
             _password = password;
         }
-        public void SendMail(string to, string subject, string body)
+        public void SendMail(string from, string to, string subject, string body)
         {
-            using (MailMessage mm = new MailMessage(_login, to))
+            using (MailMessage mm = new MailMessage(from, to))
             {
                 mm.Subject = subject;
                 mm.Body = body;

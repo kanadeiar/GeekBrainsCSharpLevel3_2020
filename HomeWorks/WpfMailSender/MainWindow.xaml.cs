@@ -31,11 +31,12 @@ namespace WpfMailSender
         {
             WpfTestMailSender.Server = TextBoxServer.Text;
             WpfTestMailSender.Port = Int32.Parse(TextBoxPort.Text);
+            string from = TextBoxFrom.Text;
             string to = TextBoxTo.Text;
             string subject = TextBoxSubject.Text;
             string body = TextBoxBody.Text;
             var emailService = new EmailSendServiceClass(TextBoxLogin.Text, PasswordBoxPassword.SecurePassword);
-            emailService.SendMail(to, subject, body);
+            emailService.SendMail(from, to, subject, body);
         }
         private void ButtonClear_Click(object sender, RoutedEventArgs e)
         {
