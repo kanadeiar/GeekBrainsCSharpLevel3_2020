@@ -33,11 +33,13 @@ namespace WpfMailSender
                     try
                     {
                         sc.Send(mm);
-                        MessageBox.Show("Успешная отправка письма!");
+                        SendEndWindow window = new SendEndWindow();
+                        window.ShowDialog();
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Облом!" + ex.Message);
+                        SendErrorWindow window = new SendErrorWindow(ex.Message);
+                        window.ShowDialog();
                     }
                 }
             }
