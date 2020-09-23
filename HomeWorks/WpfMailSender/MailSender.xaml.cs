@@ -19,11 +19,11 @@ using System.Windows.Shapes;
 namespace WpfMailSender
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для MailSender.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MailSender : Window
     {
-        public MainWindow()
+        public MailSender()
         {
             InitializeComponent();
         }
