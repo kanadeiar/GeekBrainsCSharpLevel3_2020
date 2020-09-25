@@ -1,0 +1,15 @@
+﻿<Application x:Class="WpfMailSender.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WpfMailSender"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             StartupUri="MailSender.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <sys:String x:Key="NameApplication">Приложение Рассылки электронной почты</sys:String>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
