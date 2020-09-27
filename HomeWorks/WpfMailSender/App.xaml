@@ -9,7 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <sys:String x:Key="NameApplication">Приложение Рассылки электронной почты</sys:String>
+            <sys:String x:Key="NameApplication">Рассыльщик электронной почты</sys:String>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

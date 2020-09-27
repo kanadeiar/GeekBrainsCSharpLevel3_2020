@@ -5,25 +5,90 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfMailSender"
         mc:Ignorable="d"
-        Title="Рассыльщик" Height="500" Width="600" WindowStartupLocation="CenterScreen" Icon="Avatar.ico">
+        Title="{StaticResource NameApplication}" Height="500" Width="700" WindowStartupLocation="CenterScreen" Icon="Avatar.ico" ResizeMode="CanResizeWithGrip">
     <DockPanel>
         <Menu DockPanel.Dock="Top" HorizontalAlignment="Left" BorderBrush="Black">
             <MenuItem Header="Файл">
-                <MenuItem Header="Резерв"/>
+                <MenuItem Header="Создать"/>
+                <MenuItem Header="Открыть"/>
+                <MenuItem Header="Сохранить"/>
                 <Separator/>
-                <!--<MenuItem Header="Выход" Click="MenuItemExit_OnClick"/>-->
+                <MenuItem Header="Выход" Click="MenuItem_OnClick" ToolTip="Выход из приложения"/>
+            </MenuItem>
+            <MenuItem Header="Сервис">
+                <MenuItem Header="Настройка"/>
             </MenuItem>
             <MenuItem Header="Помощь">
-                <!--<MenuItem Header="Справка" Click="MenuItemHelp_OnClick"/>-->
+                <MenuItem Header="Справка"/>
             </MenuItem>
         </Menu>
-        <Grid DockPanel.Dock="Top" Background="PaleGreen">
-            <TextBlock Text="{StaticResource NameApplication}" Height="30" FontSize="18" HorizontalAlignment="Center" 
-                       Margin="5" VerticalAlignment="Center"/>
+        <Grid DockPanel.Dock="Top" Background="PaleGreen" Height="40">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="Приложение - " FontSize="18"/>
+                <TextBlock Text="{StaticResource NameApplication}" Height="30" FontSize="18"/>
+            </StackPanel>
         </Grid>
-        <Grid>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock Text="Статус приложения"/>
+            </StatusBarItem>
+        </StatusBar>
+        <TabControl>
+            <TabItem Header="Списки">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <ToolBarTray Grid.Row="0">
+                        <ToolBar Header="Сервера">
+                            <ComboBox MinWidth="120" MaxWidth="200" SelectedIndex="0">
+                                <ComboBoxItem>smtp.yandex.ru:587</ComboBoxItem>
+                                <ComboBoxItem>smtp.gmail.com:587</ComboBoxItem>
+                                <ComboBoxItem>smtp.mail.ru:25</ComboBoxItem>
+                            </ComboBox>
+                            <Button Content="Добавить"/>
+                            <Button Content="Редактировать"/>
+                            <Button Content="Удалить"/>
+                        </ToolBar>
+                        <ToolBar Header="Отправители" Band="1">
+                            <ComboBox MinWidth="120" MaxWidth="200" SelectedIndex="0">
+                                <ComboBoxItem>Иванов:ivanov@mail.ru</ComboBoxItem>
+                                <ComboBoxItem>Петров:petrov@mail.ru</ComboBoxItem>
+                                <ComboBoxItem>Сидоров:sidorov@mail.ru</ComboBoxItem>
+                            </ComboBox>
+                            <Button Content="Добавить"/>
+                            <Button Content="Редактировать"/>
+                            <Button Content="Удалить"/>
+                        </ToolBar>
+                        <ToolBar Header="Планировщик">
+                            <Button Content="Запланировать"/>
+                        </ToolBar>
+                    </ToolBarTray>
+                    <DataGrid Grid.Row="1">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn/>
+                            <DataGridComboBoxColumn/>
+                            <DataGridHyperlinkColumn/>
+                            <DataGridTemplateColumn/>
+                            <DataGridTextColumn Header="ID"/>
+                            <DataGridTextColumn Header="Имя" MinWidth="120"/>
+                            <DataGridTextColumn Header="Адрес" MinWidth="150"/>
+                            <DataGridTextColumn Header="Описание" Width="*"/>
+                        </DataGrid.Columns>
 
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Планировщик">
 
-        </Grid>
+            </TabItem>
+            <TabItem Header="Письма">
+
+            </TabItem>
+            <TabItem Header="Статистика">
+
+            </TabItem>
+        </TabControl>
     </DockPanel>
 </Window>
