@@ -76,18 +76,116 @@
                             <DataGridTextColumn Header="Адрес" MinWidth="150"/>
                             <DataGridTextColumn Header="Описание" Width="*"/>
                         </DataGrid.Columns>
-
                     </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="Планировщик">
-
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Grid.Column="0" Header="Планирование" Margin="0,0,3,0">
+                        <StackPanel>
+                            <TextBlock Text="Дата задания" HorizontalAlignment="Center"/>
+                            <Calendar SelectedDate="2020-09-05"/>
+                            <UniformGrid Columns="1" Margin="5">
+                                <Button Content="Запланировать"/>
+                                <Button Content="Отправить сейчас"/>
+                            </UniformGrid>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1" Header="Задания">
+                        <ListBox>
+                            <ListBoxItem HorizontalContentAlignment="Stretch">
+                                <Border BorderBrush="Green" BorderThickness="1" Padding="4" CornerRadius="4">
+                                    <Grid>
+                                        <StackPanel>
+                                            <TextBlock Text="Дата: 01.12.2020"/>
+                                            <TextBlock Text="Отправитель: Админ"/>
+                                            <TextBlock Text="Получатель: Пользователь"/>
+                                            <TextBlock Text="Тема письма: Тест"/>
+                                        </StackPanel>
+                                        <Button VerticalAlignment="Top" HorizontalAlignment="Right" Padding="8,2" ToolTip="Удалить" Content="x"/>
+                                    </Grid>
+                                </Border>
+                            </ListBoxItem>
+                            <ListBoxItem HorizontalContentAlignment="Stretch">
+                                <Border BorderBrush="Green" BorderThickness="1" Padding="4" CornerRadius="4">
+                                    <Grid>
+                                        <StackPanel>
+                                            <TextBlock Text="Дата: 01.12.2020"/>
+                                            <TextBlock Text="Отправитель: Админ"/>
+                                            <TextBlock Text="Получатель: Пользователь"/>
+                                            <TextBlock Text="Тема письма: Тест"/>
+                                        </StackPanel>
+                                        <Button VerticalAlignment="Top" HorizontalAlignment="Right" Padding="8,2" ToolTip="Удалить" Content="x"/>
+                                    </Grid>
+                                </Border>
+                            </ListBoxItem>
+                        </ListBox>
+                    </GroupBox>
+                    <GridSplitter Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="3"/>
+                </Grid>
             </TabItem>
             <TabItem Header="Письма">
-
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="150"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <GroupBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Header="Письма">
+                        <ListBox>
+                            <ListBoxItem>Письмо первое</ListBoxItem>
+                            <ListBoxItem>Письмо второе</ListBoxItem>
+                            <ListBoxItem>Письмо третье</ListBoxItem>
+                        </ListBox>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1" Grid.Row="0" Header="Заголовок">
+                        <TextBox/>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1" Grid.Row="1" Header="Текст письма">
+                        <TextBox AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"/>
+                    </GroupBox>
+                </Grid>
             </TabItem>
             <TabItem Header="Статистика">
+                <Border Margin="5" Padding="10" BorderThickness="3" BorderBrush="PaleGreen" CornerRadius="5">
+                    <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Margin" Value="0,5,0,0"/>
+                                <Style.Triggers>
+                                    <Trigger Property="Grid.Column" Value="0">
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                                        <Setter Property="Margin" Value="0,5,5,0"/>
+                                    </Trigger>
+                                </Style.Triggers>
 
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Отправлено писем: "/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="0 шт"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Всего отправителей: "/>
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="0 шт"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Всего получателей: "/>
+                        <TextBlock Grid.Column="1" Grid.Row="2" Text="0 шт"/>
+                    </Grid>
+                </Border>
             </TabItem>
         </TabControl>
     </DockPanel>
