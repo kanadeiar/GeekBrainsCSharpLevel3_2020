@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Services\SmtpSender.cs" />
     <Page Include="MailSender.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -72,6 +73,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Data\TestData.cs" />
     <Compile Include="MailSender.xaml.cs">
       <DependentUpon>MailSender.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -82,6 +84,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Base\BaseMailer.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\Recipient.cs" />
+    <Compile Include="Models\Sender.cs" />
+    <Compile Include="Models\Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -112,13 +119,16 @@
     <Resource Include="Avatar.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\edit.png" />
+    <Resource Include="Resources\Images\edit.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\add.png" />
+    <Resource Include="Resources\Images\add.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\del.png" />
+    <Resource Include="Resources\Images\del.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Windows\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

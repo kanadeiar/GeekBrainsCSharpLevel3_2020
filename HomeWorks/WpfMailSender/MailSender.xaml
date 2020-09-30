@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
-        xmlns:local="clr-namespace:WpfMailSender"
+        xmlns:data="clr-namespace:WpfMailSender.Data"
+        xmlns:m="clr-namespace:WpfMailSender.Models"
+        xmlns:l="clr-namespace:WpfMailSender"
         mc:Ignorable="d"
         Title="{StaticResource NameApplication}" Height="500" Width="700" WindowStartupLocation="CenterScreen" Icon="Avatar.ico" ResizeMode="CanResizeWithGrip">
     <DockPanel>
@@ -47,10 +49,22 @@
                     </Grid.RowDefinitions>
                     <ToolBarTray Grid.Row="0" Grid.ColumnSpan="2">
                         <ToolBar Header="Сервера">
-                            <ComboBox MinWidth="120" MaxWidth="200" SelectedIndex="0" Margin="28,0,0,0">
-                                <ComboBoxItem>smtp.yandex.ru:587</ComboBoxItem>
-                                <ComboBoxItem>smtp.gmail.com:587</ComboBoxItem>
-                                <ComboBoxItem>smtp.mail.ru:25</ComboBoxItem>
+                            <ComboBox Name="ComboBoxServers"
+                                      MinWidth="140" MaxWidth="200" SelectedIndex="0" Margin="28,0,0,0"
+                                      ItemsSource="{x:Static data:TestData.Servers}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.ToolTip>
+                                                <TextBlock>
+                                                    Адрес: <TextBlock Text="{Binding Address}"/>
+                                                    Порт: <TextBlock Text="{Binding Port}"/>
+                                                </TextBlock>
+                                            </TextBlock.ToolTip>
+                                            Сервер: <TextBlock Text="{Binding Name}"/>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
                             </ComboBox>
                             <Button ToolTip="Добавить">
                                 <StackPanel Orientation="Horizontal">
@@ -72,26 +86,34 @@
                             </Button>
                         </ToolBar>
                         <ToolBar Header="Отправители" Band="1">
-                            <ComboBox MinWidth="120" MaxWidth="200" SelectedIndex="0">
-                                <ComboBoxItem>Иванов:ivanov@mail.ru</ComboBoxItem>
-                                <ComboBoxItem>Петров:petrov@mail.ru</ComboBoxItem>
-                                <ComboBoxItem>Сидоров:sidorov@mail.ru</ComboBoxItem>
+                            <ComboBox Name="ComboBoxSenders" 
+                                      MinWidth="120" MaxWidth="200" SelectedIndex="0"
+                                      ItemsSource="{x:Static data:TestData.Senders}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock ToolTip="{Binding Description}">
+                                            <TextBlock Text="{Binding Name}"/>
+                                            <TextBlock Text="{Binding Address}"/>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+
                             </ComboBox>
                             <Button ToolTip="Добавить">
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Source="Images/add.png" Height="15"/>
+                                    <Image Source="Resources/Images/add.png" Height="15"/>
                                     <TextBlock Text="Доб." Margin="3,0,0,0"/>
                                 </StackPanel>
                             </Button>
                             <Button ToolTip="Редактировать">
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Source="Images/edit.png" Height="15"/>
+                                    <Image Source="Resources/Images/edit.png" Height="15"/>
                                     <TextBlock Text="Редакт." Margin="3,0,0,0"/>
                                 </StackPanel>
                             </Button>
                             <Button ToolTip="Удалить">
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Source="Images/del.png" Height="15"/>
+                                    <Image Source="Resources/Images/del.png" Height="15"/>
                                     <TextBlock Text="Удал." Margin="3,0,0,0"/>
                                 </StackPanel>
                             </Button>
@@ -105,21 +127,25 @@
                             </Button>
                         </ToolBar>
                     </ToolBarTray>
-                    <DataGrid Grid.Row="1" Grid.ColumnSpan="2">
-                        <DataGrid.Columns>
-                            <DataGridCheckBoxColumn/>
-                            <DataGridComboBoxColumn/>
-                            <DataGridHyperlinkColumn/>
-                            <DataGridTemplateColumn/>
-                            <DataGridTextColumn Header="ID"/>
-                            <DataGridTextColumn Header="Имя" MinWidth="120"/>
-                            <DataGridTextColumn Header="Адрес" MinWidth="150"/>
-                            <DataGridTextColumn Header="Описание" Width="*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <GroupBox Header="Получатели" Grid.Row="1" Grid.ColumnSpan="2">
+                        <DataGrid Name="DataGridRecirients"
+                                  ItemsSource="{x:Static data:TestData.Recipients}" AutoGenerateColumns="False" GridLinesVisibility="Vertical" AlternatingRowBackground="PowderBlue" VerticalGridLinesBrush="DarkSlateBlue">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" MaxWidth="60"
+                                                    Binding="{Binding Id}"/>
+                                <DataGridTextColumn Header="Имя" MinWidth="120"
+                                                    Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Адрес" MinWidth="150"
+                                                    Binding="{Binding Address}"/>
+                                <DataGridTextColumn Header="Описание" Width="*"
+                                                    Binding="{Binding Description}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+
                 </Grid>
             </TabItem>
-            <TabItem Header="Планировщик">
+            <TabItem Header="Планировщик" Height="22" VerticalAlignment="Top">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -179,17 +205,16 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <GroupBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Header="Письма">
-                        <ListBox>
-                            <ListBoxItem>Письмо первое</ListBoxItem>
-                            <ListBoxItem>Письмо второе</ListBoxItem>
-                            <ListBoxItem>Письмо третье</ListBoxItem>
+                        <ListBox Name="ListBoxMessages"
+                                 ItemsSource="{x:Static data:TestData.Messages}" DisplayMemberPath="Title" SelectedIndex="0">
                         </ListBox>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Grid.Row="0" Header="Заголовок">
-                        <TextBox/>
+                        <TextBox Text="{Binding SelectedItem.Title, ElementName=ListBoxMessages}"/>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Grid.Row="1" Header="Текст письма">
-                        <TextBox AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"/>
+                        <TextBox AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
+                                 Text="{Binding SelectedItem.Body, ElementName=ListBoxMessages}"/>
                     </GroupBox>
                 </Grid>
             </TabItem>
