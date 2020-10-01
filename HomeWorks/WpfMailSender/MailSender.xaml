@@ -157,7 +157,7 @@
                             <Calendar SelectedDate="2020-09-05"/>
                             <UniformGrid Columns="1" Margin="5">
                                 <Button Content="Запланировать"/>
-                                <Button Content="Отправить сейчас"/>
+                                <Button x:Name="ButtonSendNow" Content="Отправить сейчас" Click="ButtonSendNow_OnClick"/>
                             </UniformGrid>
                         </StackPanel>
                     </GroupBox>
