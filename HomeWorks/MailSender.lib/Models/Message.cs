@@ -1,6 +1,6 @@
 ﻿namespace WpfMailSender.Models
 {
-    class Message
+    public class Message
     {
         public int Id { get; set; }
         public string Title { get; set; }

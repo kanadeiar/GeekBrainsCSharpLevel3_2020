@@ -64,7 +64,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Services\SmtpSender.cs" />
     <Compile Include="Windows\ServerEditWindow.xaml.cs">
       <DependentUpon>ServerEditWindow.xaml</DependentUpon>
     </Compile>
@@ -91,11 +90,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Base\BaseMailer.cs" />
-    <Compile Include="Models\Message.cs" />
-    <Compile Include="Models\Recipient.cs" />
-    <Compile Include="Models\Sender.cs" />
-    <Compile Include="Models\Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -134,6 +128,11 @@
   <ItemGroup>
     <Resource Include="Resources\Images\del.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\MailSender.lib\MailSender.lib.csproj">
+      <Project>{a9ec1fbd-ceee-4a7e-a235-4b0d97e488d4}</Project>
+      <Name>MailSender.lib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

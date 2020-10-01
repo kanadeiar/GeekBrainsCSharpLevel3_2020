@@ -1,6 +1,6 @@
 ﻿namespace WpfMailSender.Models.Base
 {
-    abstract class BaseMailer
+    public abstract class BaseMailer
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:data="clr-namespace:WpfMailSender.Data"
-        xmlns:m="clr-namespace:WpfMailSender.Models"
+        xmlns:m="clr-namespace:WpfMailSender.Models;assembly=MailSender.lib"
         xmlns:l="clr-namespace:WpfMailSender"
         mc:Ignorable="d"
         Title="{StaticResource NameApplication}" Height="500" Width="700" WindowStartupLocation="CenterScreen" Icon="Avatar.ico" ResizeMode="CanResizeWithGrip">

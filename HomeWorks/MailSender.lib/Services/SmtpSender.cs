@@ -3,7 +3,7 @@ using System.Net.Mail;
 
 namespace WpfMailSender.Services
 {
-    class SmtpSender
+    public class SmtpSender
     {
         private readonly string _address;
         private readonly int _port;

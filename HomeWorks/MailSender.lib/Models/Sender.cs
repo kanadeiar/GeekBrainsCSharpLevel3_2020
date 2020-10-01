@@ -2,7 +2,7 @@
 
 namespace WpfMailSender.Models
 {
-    class Sender : BaseMailer
+    public class Sender : BaseMailer
     {
     }
 }

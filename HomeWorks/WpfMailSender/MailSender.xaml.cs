@@ -58,12 +58,14 @@ namespace WpfMailSender
                 out var login,
                 out var password))
                 return;
-
+            
+            int newid = 1;
+            if (TestData.Servers.Count != 0)
+                newid = TestData.Servers.Max(s => s.Id) + 1;
+            
             var server = new Server
             {
-                Id = TestData.Servers
-                    .DefaultIfEmpty()
-                    .Max(s => s.Id) + 1,
+                Id = newid,
                 Name = name,
                 Address = address,
                 Port = port,
