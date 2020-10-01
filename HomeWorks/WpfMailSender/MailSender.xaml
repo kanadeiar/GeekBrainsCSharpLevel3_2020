@@ -66,19 +66,19 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <Button ToolTip="Добавить">
+                            <Button Name="ButtonAddServer" ToolTip="Добавить" Click="ButtonAddServer_OnClick">
                                 <StackPanel Orientation="Horizontal">
                                     <fa:FontAwesome Icon="Solid_Plus" Foreground="Green" Margin="0,0,3,0"/>
                                     <TextBlock>Доб.</TextBlock>
                                 </StackPanel>
                             </Button>
-                            <Button ToolTip="Редактировать">
+                            <Button Name="ButtonEditServer" ToolTip="Редактировать" Click="ButtonEditServer_OnClick">
                                 <StackPanel Orientation="Horizontal">
                                     <fa:FontAwesome Icon="Solid_Edit" Foreground="Yellow" Margin="0,0,3,0"/>
                                     <TextBlock>Редакт.</TextBlock>
                                 </StackPanel>
                             </Button>
-                            <Button ToolTip="Удалить">
+                            <Button Name="ButtonDeleteServer" ToolTip="Удалить" Click="ButtonDeleteServer_OnClick">
                                 <StackPanel Orientation="Horizontal">
                                     <fa:FontAwesome Icon="Solid_Times" Foreground="Red" Margin="0,0,3,0"/>
                                     <TextBlock>Удал.</TextBlock>
