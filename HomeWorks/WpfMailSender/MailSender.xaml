@@ -7,6 +7,7 @@
         xmlns:data="clr-namespace:WpfMailSender.Data"
         xmlns:m="clr-namespace:WpfMailSender.Models;assembly=MailSender.lib"
         xmlns:l="clr-namespace:WpfMailSender"
+        xmlns:wpftool="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="{StaticResource NameApplication}" Height="500" Width="700" WindowStartupLocation="CenterScreen" Icon="Avatar.ico" ResizeMode="CanResizeWithGrip">
     <DockPanel>
@@ -154,10 +155,16 @@
                     <GroupBox Grid.Column="0" Header="Планирование" Margin="0,0,3,0">
                         <StackPanel>
                             <TextBlock Text="Дата задания" HorizontalAlignment="Center"/>
-                            <Calendar SelectedDate="2020-09-05"/>
+                            <Calendar Name="CalendarPlan" SelectedDate="2020-09-05"/>
+                            <wpftool:TimePicker Name="TimePickerPlan"/>
                             <UniformGrid Columns="1" Margin="5">
                                 <Button Content="Запланировать"/>
-                                <Button x:Name="ButtonSendNow" Content="Отправить сейчас" Click="ButtonSendNow_OnClick"/>
+                                <Button x:Name="ButtonSendNow" Click="ButtonSendNow_OnClick">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Resources/Images/letter2.png" Height="20"/>
+                                        <TextBlock>Отправить сейчас</TextBlock>
+                                    </StackPanel>
+                                </Button>
                             </UniformGrid>
                         </StackPanel>
                     </GroupBox>
