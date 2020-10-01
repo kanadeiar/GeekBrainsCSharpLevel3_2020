@@ -31,6 +31,13 @@ namespace WpfMailSender
             if (!(DataGridRecirients.SelectedItem is Recipient recipient)) return;
             if (!(ComboBoxServers.SelectedItem is Server server)) return;
             if (!(ListBoxMessages.SelectedItem is Message message)) return;
+
+            if (string.IsNullOrEmpty(TextBoxMailMessage.Text))
+            {
+                MessageBox.Show("Письмо без текста нельзя отправить, пожалуйста заполните тело письма.", "Отмена отправки письма", MessageBoxButton.OK, MessageBoxImage.Stop);
+                TabItemLetter.IsSelected = true;
+                return;
+            }
             
             var mailSender = new SmtpSender(server.Address, server.Port, server.UseSSL, server.Login, server.Password);
 
@@ -128,6 +135,11 @@ namespace WpfMailSender
             ComboBoxServers.ItemsSource = null;
             ComboBoxServers.ItemsSource = TestData.Servers;
             ComboBoxServers.SelectedItem = TestData.Servers.FirstOrDefault();
+        }
+
+        private void ButtonToPlan_OnClick(object sender, RoutedEventArgs e)
+        {
+            TabItemPlan.IsSelected = true;
         }
     }
 }

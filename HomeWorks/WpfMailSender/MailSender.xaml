@@ -119,7 +119,7 @@
                             </Button>
                         </ToolBar>
                         <ToolBar Header="Планировщик">
-                            <Button ToolTip="Запланировать">
+                            <Button Name="ButtonToPlan" ToolTip="Запланировать" Click="ButtonToPlan_OnClick">
                                 <StackPanel Orientation="Horizontal">
                                     <fa:FontAwesome Icon="Solid_Clock" Margin="0,0,3,0" Foreground="Blue"/>
                                     <TextBlock Text="Запланировать"/>
@@ -145,7 +145,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Планировщик" Height="22" VerticalAlignment="Top">
+            <TabItem Header="Планировщик" Height="22" VerticalAlignment="Top" Name="TabItemPlan">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -194,7 +194,7 @@
                     <GridSplitter Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="3"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Письма">
+            <TabItem Header="Письма" Name="TabItemLetter">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" MinWidth="150"/>
@@ -213,7 +213,7 @@
                         <TextBox Text="{Binding SelectedItem.Title, ElementName=ListBoxMessages}"/>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Grid.Row="1" Header="Текст письма">
-                        <TextBox AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
+                        <TextBox Name="TextBoxMailMessage" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
                                  Text="{Binding SelectedItem.Body, ElementName=ListBoxMessages}"/>
                     </GroupBox>
                 </Grid>
