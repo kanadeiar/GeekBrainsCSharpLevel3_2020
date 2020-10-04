@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WpfMailSender.Data;
+using WpfMailSender.Models;
+using WpfMailSender.Services;
+using WpfMailSender.Windows;
 
 namespace WpfMailSender
 {
@@ -27,29 +18,128 @@ namespace WpfMailSender
         {
             InitializeComponent();
         }
-        private void ButtonSend_Click(object sender, RoutedEventArgs e)
-        {
-            WpfTestMailSender.Server = TextBoxServer.Text;
-            WpfTestMailSender.Port = Int32.Parse(TextBoxPort.Text);
-            string from = TextBoxFrom.Text;
-            string to = TextBoxTo.Text;
-            string subject = TextBoxSubject.Text;
-            string body = TextBoxBody.Text;
-            var emailService = new EmailSendServiceClass(TextBoxLogin.Text, PasswordBoxPassword.SecurePassword);
-            emailService.SendMail(from, to, subject, body);
-        }
-        private void ButtonClear_Click(object sender, RoutedEventArgs e)
-        {
-            TextBoxBody.Text = String.Empty;
-        }
-        private void MenuItemExit_OnClick(object sender, RoutedEventArgs e)
+
+
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
         {
             Close();
         }
-        private void MenuItemHelp_OnClick(object sender, RoutedEventArgs e)
+
+        private void ButtonSendNow_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Приложение \"Рассыльщик\" Домашнее задание лекции № 1.");
+            if (!(ComboBoxSenders.SelectedItem is Sender sender_)) return;
+            if (!(DataGridRecirients.SelectedItem is Recipient recipient)) return;
+            if (!(ComboBoxServers.SelectedItem is Server server)) return;
+            if (!(ListBoxMessages.SelectedItem is Message message)) return;
+
+            if (string.IsNullOrEmpty(TextBoxMailMessage.Text))
+            {
+                MessageBox.Show("Письмо без текста нельзя отправить, пожалуйста заполните тело письма.", "Отмена отправки письма", MessageBoxButton.OK, MessageBoxImage.Stop);
+                TabItemLetter.IsSelected = true;
+                return;
+            }
+            
+            var mailSender = new SmtpSender(server.Address, server.Port, server.UseSSL, server.Login, server.Password);
+
+            try
+            {
+                var timer = Stopwatch.StartNew();
+                mailSender.Send(sender_.Address, recipient.Address, message.Title, message.Body);
+                timer.Stop();
+                MessageBox.Show($"Почтовое сообщение успешно отправлено за {timer.Elapsed.TotalSeconds:0.##} секунд", "Отправка почты", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка отправки почты!", "Отправка почты", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
+        private void ButtonAddServer_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (!ServerEditWindow.Create(
+                out var name,
+                out var address,
+                out var port,
+                out var ssl,
+                out var description,
+                out var login,
+                out var password))
+                return;
+            
+            int newid = 1;
+            if (TestData.Servers.Count != 0)
+                newid = TestData.Servers.Max(s => s.Id) + 1;
+            
+            var server = new Server
+            {
+                Id = newid,
+                Name = name,
+                Address = address,
+                Port = port,
+                UseSSL = ssl,
+                Desctiption = description,
+                Login = login,
+                Password = password
+            };
+
+            TestData.Servers.Add(server);
+
+            ComboBoxServers.ItemsSource = null;
+            ComboBoxServers.ItemsSource = TestData.Servers;
+            ComboBoxServers.SelectedItem = server;
+        }
+
+        private void ButtonEditServer_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (!(ComboBoxServers.SelectedItem is Server server))
+                return;
+
+            var name = server.Name;
+            var address = server.Address;
+            var port = server.Port;
+            var ssl = server.UseSSL;
+            var description = server.Desctiption;
+            var login = server.Login;
+            var password = server.Password;
+
+            if (!ServerEditWindow.ShowDialog("Редактирование сервера",
+                ref name,
+                ref address,
+                ref port,
+                ref ssl,
+                ref description,
+                ref login,
+                ref password))
+                return;
+
+            server.Name = name;
+            server.Address = address;
+            server.Port = port;
+            server.UseSSL = ssl;
+            server.Desctiption = description;
+            server.Login = login;
+            server.Password = password;
+
+            ComboBoxServers.ItemsSource = null;
+            ComboBoxServers.ItemsSource = TestData.Servers;
+            ComboBoxServers.SelectedItem = server;
+        }
+
+        private void ButtonDeleteServer_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (!(ComboBoxServers.SelectedItem is Server server)) 
+                return;
+
+            TestData.Servers.Remove(server);
+
+            ComboBoxServers.ItemsSource = null;
+            ComboBoxServers.ItemsSource = TestData.Servers;
+            ComboBoxServers.SelectedItem = TestData.Servers.FirstOrDefault();
+        }
+
+        private void ButtonToPlan_OnClick(object sender, RoutedEventArgs e)
+        {
+            TabItemPlan.IsSelected = true;
+        }
     }
 }
