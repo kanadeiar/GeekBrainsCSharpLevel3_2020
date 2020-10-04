@@ -5,11 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:data="clr-namespace:WpfMailSender.Data"
-        xmlns:m="clr-namespace:WpfMailSender.Models;assembly=MailSender.lib"
-        xmlns:l="clr-namespace:WpfMailSender"
+        xmlns:vm="clr-namespace:WpfMailSender.ViewModels"
         xmlns:wpftool="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:l="clr-namespace:WpfMailSender"
         mc:Ignorable="d"
-        Title="{StaticResource NameApplication}" Height="500" Width="700" WindowStartupLocation="CenterScreen" Icon="Avatar.ico" ResizeMode="CanResizeWithGrip">
+        Title="{Binding Path=Title}" Height="500" Width="700" WindowStartupLocation="CenterScreen" Icon="Avatar.ico" ResizeMode="CanResizeWithGrip">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <DockPanel>
         <Menu DockPanel.Dock="Top" HorizontalAlignment="Left" BorderBrush="Black">
             <MenuItem Header="Файл">
@@ -29,7 +32,7 @@
         <Grid DockPanel.Dock="Top" Background="PaleGreen" Height="40">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Text="Приложение - " FontSize="18"/>
-                <TextBlock Text="{StaticResource NameApplication}" Height="30" FontSize="18"/>
+                <TextBlock Text="{Binding Path=Title}" Height="30" FontSize="18" FontWeight="Bold"/>
             </StackPanel>
         </Grid>
         <StatusBar DockPanel.Dock="Bottom">
