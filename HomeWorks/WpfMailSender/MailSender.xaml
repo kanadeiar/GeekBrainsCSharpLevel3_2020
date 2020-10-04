@@ -52,7 +52,7 @@
             <StatusBarItem>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Текущее время: "/>
-                    <TextBlock Text="12:33:32"/>
+                    <TextBlock Text="{Binding Path=CurrentTime, ConverterCulture=ru-RU, StringFormat=HH:mm:ss.ffff}"/>
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>
