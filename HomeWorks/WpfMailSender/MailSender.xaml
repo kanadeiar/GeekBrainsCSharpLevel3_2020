@@ -9,7 +9,7 @@
         xmlns:wpftool="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:l="clr-namespace:WpfMailSender"
         mc:Ignorable="d"
-        Title="{Binding Path=Title}" Height="500" Width="700" WindowStartupLocation="CenterScreen" Icon="Avatar.ico" ResizeMode="CanResizeWithGrip">
+        Title="{Binding Path=Title}" Height="600" Width="800" WindowStartupLocation="CenterScreen" Icon="Avatar.ico" ResizeMode="CanResizeWithGrip">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
@@ -71,22 +71,13 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                             <Button Name="ButtonAddServer" ToolTip="Добавить" Click="ButtonAddServer_OnClick">
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:FontAwesome Icon="Solid_Plus" Foreground="Green" Margin="0,0,3,0"/>
-                                    <TextBlock>Доб.</TextBlock>
-                                </StackPanel>
+                                <fa:FontAwesome Icon="Solid_Plus" Foreground="Green" FontSize="20" Margin="-5,-5"/>
                             </Button>
                             <Button Name="ButtonEditServer" ToolTip="Редактировать" Click="ButtonEditServer_OnClick">
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:FontAwesome Icon="Solid_Edit" Foreground="Yellow" Margin="0,0,3,0"/>
-                                    <TextBlock>Редакт.</TextBlock>
-                                </StackPanel>
+                                <fa:FontAwesome Icon="Solid_Edit" Foreground="Yellow" FontSize="20" Margin="-5,-5"/>
                             </Button>
                             <Button Name="ButtonDeleteServer" ToolTip="Удалить" Click="ButtonDeleteServer_OnClick">
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:FontAwesome Icon="Solid_Times" Foreground="Red" Margin="0,0,3,0"/>
-                                    <TextBlock>Удал.</TextBlock>
-                                </StackPanel>
+                                <fa:FontAwesome Icon="Solid_Times" Foreground="Red" FontSize="20" Margin="-5,-5"/>
                             </Button>
                         </ToolBar>
                         <ToolBar Header="Отправители" Band="1">
@@ -101,31 +92,21 @@
                                         </TextBlock>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
-
                             </ComboBox>
-                            <Button ToolTip="Добавить">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="Resources/Images/add.png" Height="15"/>
-                                    <TextBlock Text="Доб." Margin="3,0,0,0"/>
-                                </StackPanel>
+                            <Button Name="ButtonAddSender" ToolTip="Добавить" >
+                                <fa:FontAwesome Icon="Solid_Plus" Foreground="Green" FontSize="20" Margin="-5,-5"/>
                             </Button>
-                            <Button ToolTip="Редактировать">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="Resources/Images/edit.png" Height="15"/>
-                                    <TextBlock Text="Редакт." Margin="3,0,0,0"/>
-                                </StackPanel>
+                            <Button Name="ButtonEditSender" ToolTip="Редактировать" >
+                                <fa:FontAwesome Icon="Solid_Edit" Foreground="Yellow" FontSize="20" Margin="-5,-5"/>
                             </Button>
-                            <Button ToolTip="Удалить">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="Resources/Images/del.png" Height="15"/>
-                                    <TextBlock Text="Удал." Margin="3,0,0,0"/>
-                                </StackPanel>
+                            <Button Name="ButtonDeleteSender" ToolTip="Удалить" >
+                                <fa:FontAwesome Icon="Solid_Times" Foreground="Red" FontSize="20" Margin="-5,-5"/>
                             </Button>
                         </ToolBar>
                         <ToolBar Header="Планировщик">
                             <Button Name="ButtonToPlan" ToolTip="Запланировать" Click="ButtonToPlan_OnClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <fa:FontAwesome Icon="Solid_Clock" Margin="0,0,3,0" Foreground="Blue"/>
+                                    <fa:FontAwesome Icon="Solid_Clock" Margin="-5,-5,10,-5" FontSize="20" Foreground="Blue"/>
                                     <TextBlock Text="Запланировать"/>
                                 </StackPanel>
                             </Button>
