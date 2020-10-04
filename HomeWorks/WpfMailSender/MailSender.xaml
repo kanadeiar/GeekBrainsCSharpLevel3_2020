@@ -6,10 +6,14 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:data="clr-namespace:WpfMailSender.Data"
         xmlns:vm="clr-namespace:WpfMailSender.ViewModels"
+        xmlns:cmd="clr-namespace:WpfMailSender.Infrastructure.Commands"
         xmlns:wpftool="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:l="clr-namespace:WpfMailSender"
         mc:Ignorable="d"
-        Title="{Binding Path=Title}" Height="600" Width="800" WindowStartupLocation="CenterScreen" Icon="Avatar.ico" ResizeMode="CanResizeWithGrip">
+        Title="{Binding Path=Title}" Height="600" Width="800" WindowStartupLocation="CenterScreen" Icon="Avatar.ico" ResizeMode="CanResizeWithGrip"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
@@ -20,13 +24,18 @@
                 <MenuItem Header="Открыть"/>
                 <MenuItem Header="Сохранить"/>
                 <Separator/>
-                <MenuItem Header="Выход" Click="MenuItem_OnClick" ToolTip="Выход из приложения"/>
+                <MenuItem Header="Выход" ToolTip="Выход из приложения" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}">
+                    <MenuItem.Command>
+                        <cmd:CloseWindowCommand/>
+                    </MenuItem.Command>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Сервис">
                 <MenuItem Header="Настройка"/>
             </MenuItem>
             <MenuItem Header="Помощь">
-                <MenuItem Header="Справка"/>
+                <MenuItem Header="Справка по программе" Command="{Binding Path=ShowDialogCommand}" CommandParameter
+                          ="C# Уровень 3. Методичка 3. Разработка WPF-приложений c использованием шаблона MVVM на примере MVVM Light Toolkit. Приложение 'Рассыльщик электронной почты'. Выполнил: Рассахатский Андрей."/>
             </MenuItem>
         </Menu>
         <Grid DockPanel.Dock="Top" Background="PaleGreen" Height="40">
@@ -39,9 +48,16 @@
             <StatusBarItem>
                 <TextBlock Text="Статус приложения"/>
             </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Текущее время: "/>
+                    <TextBlock Text="12:33:32"/>
+                </StackPanel>
+            </StatusBarItem>
         </StatusBar>
         <TabControl>
-            <TabItem Header="Списки">
+            <TabItem Header="Списки" MinHeight="30">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="59*"/>
@@ -130,7 +146,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Планировщик" Height="22" VerticalAlignment="Top" Name="TabItemPlan">
+            <TabItem Header="Планировщик" Height="22" VerticalAlignment="Top" Name="TabItemPlan" MinHeight="30">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -139,7 +155,7 @@
                     <GroupBox Grid.Column="0" Header="Планирование" Margin="0,0,3,0">
                         <StackPanel>
                             <TextBlock Text="Дата задания" HorizontalAlignment="Center"/>
-                            <Calendar Name="CalendarPlan" SelectedDate="2020-09-05"/>
+                            <Calendar Name="CalendarPlan" SelectedDate="2020-09-05" Language="ru-RU"/>
                             <wpftool:TimePicker Name="TimePickerPlan"/>
                             <UniformGrid Columns="1" Margin="5">
                                 <Button Content="Запланировать"/>
