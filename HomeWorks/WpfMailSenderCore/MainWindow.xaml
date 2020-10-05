@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:WpfMailSenderCore.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:WpfMailSenderCore"
         xmlns:cmd="clr-namespace:WpfMailSenderCore.Infrastructure.Commands"
         mc:Ignorable="d"
@@ -12,6 +13,11 @@
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         Title="{Binding Path=Title}" Height="500" Width="700" WindowStartupLocation="CenterScreen" Icon="/Resources/Icons/Avatar.ico" ResizeMode="CanResizeWithGrip"
         DataContext="{Binding MainWindowVModel, Source={StaticResource Locator}}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <DockPanel>
         <Menu DockPanel.Dock="Top" HorizontalAlignment="Left">
             <MenuItem Header="Файл">
@@ -26,6 +32,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Сервис">
+                <MenuItem Header="Загрузить данные" Command="{Binding LoadDataCommand}"/>
                 <MenuItem Header="Настройка"/>
             </MenuItem>
             <MenuItem Header="Помощь">
