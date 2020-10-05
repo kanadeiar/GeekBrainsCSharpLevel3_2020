@@ -10,10 +10,8 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="{Binding Path=Title}" Height="500" Width="700" WindowStartupLocation="CenterScreen" Icon="/Resources/Icons/Avatar.ico" ResizeMode="CanResizeWithGrip">
-    <Window.DataContext>
-        <vm:MainWindowViewModel/>
-    </Window.DataContext>
+        Title="{Binding Path=Title}" Height="500" Width="700" WindowStartupLocation="CenterScreen" Icon="/Resources/Icons/Avatar.ico" ResizeMode="CanResizeWithGrip"
+        DataContext="{Binding MainWindowVModel, Source={StaticResource Locator}}">
     <DockPanel>
         <Menu DockPanel.Dock="Top" HorizontalAlignment="Left">
             <MenuItem Header="Файл">
@@ -49,7 +47,7 @@
             <StatusBarItem>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Время: "/>
-                    <TextBlock Text="{Binding Path=CurrentTime, ConverterCulture=ru-RU, StringFormat=HH:mm:ss.ffff}"/>
+                    <TextBlock Text="{Binding Path=CurrentTime, ConverterCulture=ru-RU, StringFormat=HH:mm:ss.ffff}" FontWeight="Bold"/>
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>
