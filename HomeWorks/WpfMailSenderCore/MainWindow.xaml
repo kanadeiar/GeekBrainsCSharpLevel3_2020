@@ -31,7 +31,8 @@
                 <MenuItem Header="Настройка"/>
             </MenuItem>
             <MenuItem Header="Помощь">
-                <MenuItem Header="Справка по программе"/>
+                <MenuItem Header="Справка по программе" Command="{Binding Path=ShowDialogCommand}" CommandParameter
+                          ="C# Уровень 3. Методичка 3. Разработка WPF-приложений c использованием шаблона MVVM на примере MVVM Light Toolkit. Приложение 'Рассыльщик электронной почты'. Выполнил: Рассахатский Андрей."/>
             </MenuItem>
         </Menu>
         <Grid DockPanel.Dock="Top" Background="PaleGreen" Height="40">
