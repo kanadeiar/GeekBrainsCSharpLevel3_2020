@@ -3,15 +3,68 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:WpfMailSenderCore.ViewModels"
         xmlns:local="clr-namespace:WpfMailSenderCore"
+        xmlns:cmd="clr-namespace:WpfMailSenderCore.Infrastructure.Commands"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
-    <Grid>
-
-
-
-    </Grid>
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        Title="{Binding Path=Title}" Height="500" Width="700" WindowStartupLocation="CenterScreen" Icon="/Resources/Icons/Avatar.ico" ResizeMode="CanResizeWithGrip">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" HorizontalAlignment="Left">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Создать"/>
+                <MenuItem Header="Открыть"/>
+                <MenuItem Header="Сохранить"/>
+                <Separator/>
+                <MenuItem Header="Выход" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}">
+                    <MenuItem.Command>
+                        <cmd:CloseWindowCommand/>
+                    </MenuItem.Command>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Сервис">
+                <MenuItem Header="Настройка"/>
+            </MenuItem>
+            <MenuItem Header="Помощь">
+                <MenuItem Header="Справка по программе"/>
+            </MenuItem>
+        </Menu>
+        <Grid DockPanel.Dock="Top" Background="PaleGreen" Height="40">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="Приложение - " FontSize="18"/>
+                <TextBlock Text="{Binding Path=Title}" Height="30" FontSize="18" FontWeight="Bold"/>
+            </StackPanel>
+        </Grid>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock Text="Статус приложения"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Время: "/>
+                    <TextBlock Text="12:00"/>
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
+        <TabControl>
+            <TabItem Header="Списки" MinHeight="30">
+                
+            </TabItem>
+            <TabItem Header="Планировщик" MinHeight="30">
+                
+            </TabItem>
+            <TabItem Header="Письма" MinHeight="30">
+                
+            </TabItem>
+            <TabItem Header="Статистика" MinHeight="30">
+                
+            </TabItem>
+        </TabControl>
+    </DockPanel>
 </Window>
