@@ -43,13 +43,13 @@
         </Grid>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
-                <TextBlock Text="Статус приложения"/>
+                <TextBlock Text="Статус приложения: Готов"/>
             </StatusBarItem>
             <Separator/>
             <StatusBarItem>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Время: "/>
-                    <TextBlock Text="12:00"/>
+                    <TextBlock Text="{Binding Path=CurrentTime, ConverterCulture=ru-RU, StringFormat=HH:mm:ss.ffff}"/>
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>
