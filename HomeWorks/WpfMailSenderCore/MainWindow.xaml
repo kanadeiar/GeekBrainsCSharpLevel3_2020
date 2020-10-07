@@ -8,12 +8,12 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:data="clr-namespace:WpfMailSenderCore.Data"
         xmlns:local="clr-namespace:WpfMailSenderCore"
-        xmlns:cmd="clr-namespace:WpfMailSenderCore.Infrastructure.Commands"
+        xmlns:cmd="clr-namespace:WpfMailSenderCore.Infrastructure.Commands" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="{Binding Path=Title}" Height="700" Width="800" WindowStartupLocation="CenterScreen" Icon="/Resources/Icons/Avatar.ico" ResizeMode="CanResizeWithGrip"
+        Title="{Binding Path=Title}" Height="600" Width="800" WindowStartupLocation="CenterScreen" Icon="/Resources/Icons/Avatar.ico" ResizeMode="CanResizeWithGrip"
         DataContext="{Binding MainWindowVModel, Source={StaticResource Locator}}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -42,7 +42,7 @@
                           ="C# Уровень 3. Методичка 3. Разработка WPF-приложений c использованием шаблона MVVM на примере MVVM Light Toolkit. Приложение 'Рассыльщик электронной почты'. Выполнил: Рассахатский Андрей."/>
             </MenuItem>
         </Menu>
-        <Grid DockPanel.Dock="Top" Background="PaleGreen" Height="40">
+        <Grid DockPanel.Dock="Top" Background="LightGreen" Height="40">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Text="Приложение - " FontSize="18"/>
                 <TextBlock Text="{Binding Path=Title}" Height="30" FontSize="18" FontWeight="Bold"/>
@@ -154,8 +154,10 @@
                     </Grid.ColumnDefinitions>
                     <GroupBox Grid.Column="0" Header="Планирование" Margin="0,0,3,0">
                         <StackPanel>
-                            <TextBlock Text="Дата задания" HorizontalAlignment="Center"/>
-                            <Calendar Name="CalendarPlan" SelectedDate="2020-09-05" Language="ru-RU"/>
+                            <TextBlock Text="Дата и время задания" HorizontalAlignment="Center"/>
+                            <DatePicker materialDesign:HintAssist.Hint="Выберите дату" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Language="ru-RU"/>
+                            <!--<Calendar Name="CalendarPlan" SelectedDate="2020-09-05" Language="ru-RU"/>-->
+                            <materialDesign:TimePicker materialDesign:HintAssist.Hint="Выберите время"/>
                             <UniformGrid Columns="1" Margin="5">
                                 <Button x:Name="ButtinSendPlan" Margin="0,0,0,4">
                                     <StackPanel Orientation="Horizontal">
