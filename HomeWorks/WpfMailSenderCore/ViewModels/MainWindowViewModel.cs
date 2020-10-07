@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
@@ -8,6 +9,7 @@ using MailSender.Models;
 using WpfMailSenderCore.Data;
 using WpfMailSenderCore.Infrastructure.Commands;
 using WpfMailSenderCore.ViewModels.Base;
+using WpfMailSenderCore.Windows;
 
 namespace WpfMailSenderCore.ViewModels
 {
@@ -58,6 +60,31 @@ namespace WpfMailSenderCore.ViewModels
             get => _messages;
             set => Set(ref _messages, value);
         }
+        private Server _selectedServer;
+        public Server SelectedServer
+        {
+            get => _selectedServer;
+            set => Set(ref _selectedServer, value);
+        }
+        private Sender _selectedSender;
+        public Sender SelectedSender
+        {
+            get => _selectedSender;
+            set => Set(ref _selectedSender, value);
+        }
+        private Recipient _selectedRecipient;
+        public Recipient SelectedRecipient
+        {
+            get => _selectedRecipient;
+            set => Set(ref _selectedRecipient, value);
+        }
+        private Message _selectedMessage;
+        public Message SelectedMessage
+        {
+            get => _selectedMessage;
+            set => Set(ref _selectedMessage, value);
+        }
+
         #endregion
         #region Команды
         /// <summary> Команда показа сообщения </summary>
@@ -94,6 +121,81 @@ namespace WpfMailSenderCore.ViewModels
                 Messages = Messages,
             };
             data.SaveToXML(__DataFileName);
+        }
+        /// <summary> Команда создания сервера </summary>
+        public ICommand CreateServerCommand => _createServerCommand ??= new LambdaCommand(OnCreateServerCommandExecuted);
+        private ICommand _createServerCommand;
+        private void OnCreateServerCommandExecuted(object p)
+        {
+            if (!ServerEditWindow.Create(
+                out var server,
+                out var address,
+                out var port,
+                out var useSSL,
+                out var description,
+                out var login,
+                out var password))
+                return;
+            int newid = 1;
+            if (Servers.Count != 0)
+                newid = Servers.Max(s => s.Id) + 1;
+            var newServer = new Server
+            {
+                Id = newid,
+                Name = server,
+                Address = address,
+                Port = port,
+                UseSSL = useSSL,
+                Desctiption = description,
+                Login = login,
+                Password = password,
+            };
+            Servers.Add(newServer);
+        }
+        /// <summary> Команда редактирования сервера </summary>
+        public ICommand EditServerCommand => _editServerCommand 
+            ??= new LambdaCommand(OnEditServerCommandExecuted, CanEditServerCommandExecute);
+        private ICommand _editServerCommand;
+        private bool CanEditServerCommandExecute(object p) => p is Server;
+        private void OnEditServerCommandExecuted(object p)
+        {
+            if (!(p is Server editServer)) 
+                return;
+            var server = editServer.Name;
+            var address = editServer.Address;
+            var port = editServer.Port;
+            var useSSL = editServer.UseSSL;
+            var description = editServer.Desctiption;
+            var login = editServer.Login;
+            var password = editServer.Password;
+            if (!ServerEditWindow.ShowDialog("Редактирование сервера",
+                ref server,
+                ref address, 
+                ref port,
+                ref useSSL, 
+                ref description,
+                ref login, 
+                ref password
+                )) 
+                return;
+            editServer.Name = server;
+            editServer.Address = address;
+            editServer.Port = port;
+            editServer.UseSSL = useSSL;
+            editServer.Desctiption = description;
+            editServer.Login = login;
+            editServer.Password = password;
+        }
+        /// <summary> Команда удаления сервера </summary>
+        public ICommand DeleteServerCommand => _deleteServerCommand
+            ??= new LambdaCommand(OnDeleteServerCommandExecuted, CanDeleteServerCommandExecute);
+        private ICommand _deleteServerCommand;
+        private bool CanDeleteServerCommandExecute(object p) => p is Server;
+        private void OnDeleteServerCommandExecuted(object p)
+        {
+            if (!(p is Server server)) 
+                return;
+            Servers.Remove(server);
         }
         #endregion
     }

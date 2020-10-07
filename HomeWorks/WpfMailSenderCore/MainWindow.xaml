@@ -71,7 +71,8 @@
                         <ToolBar Header="Сервера">
                             <ComboBox Name="ComboBoxServers"
                                       Width="160" SelectedIndex="0" Margin="34,0,0,0"
-                                      ItemsSource="{Binding Path=Servers}">
+                                      ItemsSource="{Binding Path=Servers}" 
+                                      SelectedItem="{Binding Path=SelectedServer}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock>
@@ -87,20 +88,27 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <Button Name="ButtonAddServer" ToolTip="Добавить">
+                            <Button Name="ButtonAddServer" ToolTip="Добавить" 
+                                    Command="{Binding Path=CreateServerCommand}" 
+                                    CommandParameter="{Binding Path=SelectedServer}">
                                 <fa:FontAwesome Icon="Solid_Plus" Foreground="Green" FontSize="22" Margin="-5,-5,-5,-5"/>
                             </Button>
-                            <Button Name="ButtonEditServer" ToolTip="Редактировать">
+                            <Button Name="ButtonEditServer" ToolTip="Редактировать"
+                                    Command="{Binding Path=EditServerCommand}"
+                                    CommandParameter="{Binding Path=SelectedServer}">
                                 <fa:FontAwesome Icon="Solid_Edit" Foreground="Yellow" FontSize="22" Margin="-5,-5,-5,-5"/>
                             </Button>
-                            <Button Name="ButtonDeleteServer" ToolTip="Удалить">
+                            <Button Name="ButtonDeleteServer" ToolTip="Удалить"
+                                    Command="{Binding Path=DeleteServerCommand}"
+                                    CommandParameter="{Binding Path=SelectedServer}">
                                 <fa:FontAwesome Icon="Solid_Times" Foreground="Red" FontSize="22" Margin="-5,-5,-5,-5"/>
                             </Button>
                         </ToolBar>
                         <ToolBar Header="Отправители" Band="1">
                             <ComboBox Name="ComboBoxSenders" 
                                       Width="160" SelectedIndex="0" Margin="6,0,0,0"
-                                      ItemsSource="{Binding Path=Senders}">
+                                      ItemsSource="{Binding Path=Senders}"
+                                      SelectedItem="{Binding Path=SelectedSender}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock ToolTip="{Binding Description}">
@@ -130,8 +138,9 @@
                         </ToolBar>
                     </ToolBarTray>
                     <GroupBox Header="Получатели" Grid.Row="1" Grid.ColumnSpan="2">
-                        <DataGrid Name="DataGridRecirients"
-                                  ItemsSource="{Binding Path=Recipients}" AutoGenerateColumns="False" GridLinesVisibility="Vertical" AlternatingRowBackground="PowderBlue" VerticalGridLinesBrush="DarkSlateBlue">
+                        <DataGrid Name="DataGridRecirients" AutoGenerateColumns="False" GridLinesVisibility="Vertical" AlternatingRowBackground="PowderBlue" VerticalGridLinesBrush="LawnGreen"
+                                  ItemsSource="{Binding Path=Recipients}" 
+                                  SelectedItem="{Binding Path=SelectedRecipient}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID" MaxWidth="60"
                                                     Binding="{Binding Id}"/>
@@ -218,8 +227,9 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <GroupBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Header="Список писем">
-                        <ListBox Name="ListBoxMessages"
-                                 ItemsSource="{Binding Path=Messages}" DisplayMemberPath="Title" SelectedIndex="0">
+                        <ListBox Name="ListBoxMessages" DisplayMemberPath="Title" SelectedIndex="0"
+                                 ItemsSource="{Binding Path=Messages}" 
+                                 SelectedItem="{Binding Path=SelectedMessage}">
                         </ListBox>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Grid.Row="0" Header="Заголовок письма">
