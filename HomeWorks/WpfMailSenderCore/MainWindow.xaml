@@ -35,7 +35,7 @@
             </MenuItem>
             <MenuItem Header="Сервис">
                 <MenuItem Header="Загрузить данные" Command="{Binding LoadDataCommand}"/>
-                <MenuItem Header="Настройка"/>
+                <MenuItem Header="Сохранить данные" Command="{Binding SaveDataCommand}"/>
             </MenuItem>
             <MenuItem Header="Помощь">
                 <MenuItem Header="Справка по программе" Command="{Binding Path=ShowDialogCommand}" CommandParameter
@@ -71,7 +71,7 @@
                         <ToolBar Header="Сервера">
                             <ComboBox Name="ComboBoxServers"
                                       Width="160" SelectedIndex="0" Margin="34,0,0,0"
-                                      ItemsSource="{x:Static data:TestData.Servers}">
+                                      ItemsSource="{Binding Path=Servers}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock>
@@ -100,7 +100,7 @@
                         <ToolBar Header="Отправители" Band="1">
                             <ComboBox Name="ComboBoxSenders" 
                                       Width="160" SelectedIndex="0" Margin="6,0,0,0"
-                                      ItemsSource="{x:Static data:TestData.Senders}">
+                                      ItemsSource="{Binding Path=Senders}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock ToolTip="{Binding Description}">
@@ -131,7 +131,7 @@
                     </ToolBarTray>
                     <GroupBox Header="Получатели" Grid.Row="1" Grid.ColumnSpan="2">
                         <DataGrid Name="DataGridRecirients"
-                                  ItemsSource="{x:Static data:TestData.Recipients}" AutoGenerateColumns="False" GridLinesVisibility="Vertical" AlternatingRowBackground="PowderBlue" VerticalGridLinesBrush="DarkSlateBlue">
+                                  ItemsSource="{Binding Path=Recipients}" AutoGenerateColumns="False" GridLinesVisibility="Vertical" AlternatingRowBackground="PowderBlue" VerticalGridLinesBrush="DarkSlateBlue">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID" MaxWidth="60"
                                                     Binding="{Binding Id}"/>
@@ -219,7 +219,7 @@
                     </Grid.RowDefinitions>
                     <GroupBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Header="Список писем">
                         <ListBox Name="ListBoxMessages"
-                                 ItemsSource="{x:Static data:TestData.Messages}" DisplayMemberPath="Title" SelectedIndex="0">
+                                 ItemsSource="{Binding Path=Messages}" DisplayMemberPath="Title" SelectedIndex="0">
                         </ListBox>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Grid.Row="0" Header="Заголовок письма">

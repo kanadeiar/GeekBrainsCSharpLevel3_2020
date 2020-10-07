@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Mail;
 
-namespace WpfMailSender.Services
+namespace MailSender.Services
 {
     public class SmtpSender
     {

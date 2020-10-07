@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
-using WpfMailSender.Models;
+using MailSender.Models;
 using WpfMailSenderCore.Data;
 using WpfMailSenderCore.Infrastructure.Commands;
 using WpfMailSenderCore.ViewModels.Base;
@@ -12,6 +13,7 @@ namespace WpfMailSenderCore.ViewModels
 {
     class MainWindowViewModel : ViewModel
     {
+        private static string __DataFileName = "test.dat";
         public MainWindowViewModel()
         {
             _timer = new Timer(100);
@@ -58,21 +60,40 @@ namespace WpfMailSenderCore.ViewModels
         }
         #endregion
         #region Команды
-        private ICommand _showDialogCommand;
+        /// <summary> Команда показа сообщения </summary>
         public ICommand ShowDialogCommand => _showDialogCommand ??= new LambdaCommand(OnShowDialogCommandExecuted);
+        private ICommand _showDialogCommand;
         private void OnShowDialogCommandExecuted(object p)
         {
             var message = p as string ?? "Привет, Мир!";
             MessageBox.Show(message, "Сообщение приложения", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-        private ICommand _loadDataCommand;
+        /// <summary> Команда загрузки данных из файла </summary>
         public ICommand LoadDataCommand => _loadDataCommand ??= new LambdaCommand(OnLoadDataCommandExecuted);
+        private ICommand _loadDataCommand;
         private void OnLoadDataCommandExecuted(object p)
         {
-            Servers = new ObservableCollection<Server>(TestData.Servers);
-            Senders = new ObservableCollection<Sender>(TestData.Senders);
-            Recipients = new ObservableCollection<Recipient>(TestData.Recipients);
-            Messages = new ObservableCollection<Message>(TestData.Messages);
+            var data = File.Exists(__DataFileName)
+                ? TestData.LoadFromXML(__DataFileName)
+                : new TestData();
+            Servers = new ObservableCollection<Server>(data.Servers);
+            Senders = new ObservableCollection<Sender>(data.Senders);
+            Recipients = new ObservableCollection<Recipient>(data.Recipients);
+            Messages = new ObservableCollection<Message>(data.Messages);
+        }
+        /// <summary> Команда сохранения данных в файле </summary>
+        public ICommand SaveDataCommand => _saveDataCommand ??= new LambdaCommand(OnSaveDataCommandExecuted);
+        private ICommand _saveDataCommand;
+        private void OnSaveDataCommandExecuted(object p)
+        {
+            var data = new TestData
+            {
+                Servers = Servers,
+                Senders = Senders,
+                Recipients = Recipients,
+                Messages = Messages,
+            };
+            data.SaveToXML(__DataFileName);
         }
         #endregion
     }

@@ -1,14 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using WpfMailSender.Models;
+using System.Xml.Serialization;
+using MailSender.Models;
 
 namespace WpfMailSenderCore.Data
 {
-    static class TestData
+    public class TestData
     {
-        public static IList<Server> Servers { get; } = new List<Server>
+        public static TestData LoadFromXML(string filename)
+        {
+            var serializer = new XmlSerializer(typeof(TestData));
+            using var file = File.OpenText(filename);
+            return (TestData) serializer.Deserialize(file);
+        }
+        public void SaveToXML(string filename)
+        {
+            var serializer = new XmlSerializer(typeof(TestData));
+            using var file = File.Create(filename);
+            serializer.Serialize(file, this);
+        }
+        public IList<Server> Servers { get; set; } = new List<Server>
         {
             new Server
             {
@@ -31,8 +45,7 @@ namespace WpfMailSenderCore.Data
                 Password = "Password",
             }
         };
-
-        public static IList<Sender> Senders { get; } = new List<Sender>
+        public IList<Sender> Senders { get; set; } = new List<Sender>
         {
             new Sender
             {
@@ -56,8 +69,7 @@ namespace WpfMailSenderCore.Data
                 Description = "Почта от Сидорова"
             }
         };
-
-        public static IList<Recipient> Recipients { get; } = new List<Recipient>
+        public IList<Recipient> Recipients { get; set; } = new List<Recipient>
         {
             new Recipient
             {
@@ -81,8 +93,7 @@ namespace WpfMailSenderCore.Data
                 Description = "Почта для Сидорова"
             }
         };
-
-        public static IList<Message> Messages { get; } = Enumerable
+        public IList<Message> Messages { get; set; } = Enumerable
             .Range(1, 10)
             .Select(i => new Message
             {

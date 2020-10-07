@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MailSender.Models;
+using MailSender.Services;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using WpfMailSender.Data;
-using WpfMailSender.Models;
-using WpfMailSender.Services;
 using WpfMailSender.Windows;
 
 namespace WpfMailSender

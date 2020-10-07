@@ -1,4 +1,4 @@
-﻿namespace WpfMailSender.Models.Base
+﻿namespace MailSender.Models.Base
 {
     public abstract class BaseMailer
     {
