@@ -5,6 +5,7 @@ using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
+using MailSender.Interfaces;
 using MailSender.Models;
 using WpfMailSenderCore.Data;
 using WpfMailSenderCore.Infrastructure.Commands;
@@ -15,9 +16,11 @@ namespace WpfMailSenderCore.ViewModels
 {
     class MainWindowViewModel : ViewModel
     {
-        private static string __DataFileName = "test.dat";
-        public MainWindowViewModel()
+        private readonly IMailService _MailService;
+        private static string __DataFileName = "Data.xml";
+        public MainWindowViewModel(IMailService mailService)
         {
+            _MailService = mailService;
             _timer = new Timer(100);
             _timer.Elapsed += OnTimerElapsed;
             _timer.AutoReset = true;
@@ -102,7 +105,7 @@ namespace WpfMailSenderCore.ViewModels
         {
             var data = File.Exists(__DataFileName)
                 ? TestData.LoadFromXML(__DataFileName)
-                : new TestData();
+                : new TestData(true);
             Servers = new ObservableCollection<Server>(data.Servers);
             Senders = new ObservableCollection<Sender>(data.Senders);
             Recipients = new ObservableCollection<Recipient>(data.Recipients);
@@ -115,10 +118,10 @@ namespace WpfMailSenderCore.ViewModels
         {
             var data = new TestData
             {
-                Servers = Servers,
-                Senders = Senders,
-                Recipients = Recipients,
-                Messages = Messages,
+                Servers = Servers.ToList(),
+                Senders = Senders.ToList(),
+                Recipients = Recipients.ToList(),
+                Messages = Messages.ToList(),
             };
             data.SaveToXML(__DataFileName);
         }

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MailSender.Interfaces;
+using MailSender.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -31,6 +33,7 @@ namespace WpfMailSenderCore
         private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
         {
             services.AddSingleton<MainWindowViewModel>();
+            services.AddTransient<IMailService, SmtpMailService>();
         }
     }
 }

@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public int Port { get; set; } = 25;
+        public int Port { get; set; }
         public bool UseSSL { get; set; }
         public string Desctiption { get; set; }
         public string Login { get; set; }

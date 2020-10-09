@@ -138,7 +138,7 @@
                         </ToolBar>
                     </ToolBarTray>
                     <GroupBox Header="Получатели" Grid.Row="1" Grid.ColumnSpan="2">
-                        <DataGrid Name="DataGridRecirients" AutoGenerateColumns="False" GridLinesVisibility="Vertical" AlternatingRowBackground="PowderBlue" VerticalGridLinesBrush="LawnGreen"
+                        <DataGrid Name="DataGridRecirients" AutoGenerateColumns="False" GridLinesVisibility="Vertical" AlternatingRowBackground="PowderBlue" VerticalGridLinesBrush="LightSeaGreen" IsReadOnly="True"
                                   ItemsSource="{Binding Path=Recipients}" 
                                   SelectedItem="{Binding Path=SelectedRecipient}">
                             <DataGrid.Columns>
