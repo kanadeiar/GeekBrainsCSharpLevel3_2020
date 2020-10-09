@@ -8,7 +8,8 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:data="clr-namespace:WpfMailSenderCore.Data"
         xmlns:local="clr-namespace:WpfMailSenderCore"
-        xmlns:cmd="clr-namespace:WpfMailSenderCore.Infrastructure.Commands" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:cmd="clr-namespace:WpfMailSenderCore.Infrastructure.Commands" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -82,8 +83,7 @@
                                                     Порт: <TextBlock Text="{Binding Port}"/>
                                                 </TextBlock>
                                             </TextBlock.ToolTip>
-                                            Сервер:
-                                            <TextBlock Text="{Binding Name}"/>
+                                            Сервер: <TextBlock Text="{Binding Name}"/>
                                         </TextBlock>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
@@ -174,7 +174,7 @@
                                         <TextBlock>Запланировать</TextBlock>
                                     </StackPanel>
                                 </Button>
-                                <Button x:Name="ButtonSendNow">
+                                <Button x:Name="ButtonSendNow" Command="{Binding Path=SendMessageCommand}">
                                     <StackPanel Orientation="Horizontal">
                                         <fa:FontAwesome Icon="Solid_Share" Margin="0,0,5,0" Foreground="Violet"/>
                                         <TextBlock>Отправить сейчас</TextBlock>

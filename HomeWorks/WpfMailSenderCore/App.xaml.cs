@@ -23,7 +23,8 @@ namespace WpfMailSenderCore
         {
             get
             {
-                if (__Hosting != null) return __Hosting;
+                if (__Hosting != null) 
+                    return __Hosting;
                 var host_builder = Host.CreateDefaultBuilder(Environment.GetCommandLineArgs());
                 host_builder.ConfigureServices(ConfigureServices);
                 return __Hosting = host_builder.Build();
@@ -33,7 +34,11 @@ namespace WpfMailSenderCore
         private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
         {
             services.AddSingleton<MainWindowViewModel>();
+#if DEBUG
+            services.AddTransient<IMailService, DebugMailService>();
+#else
             services.AddTransient<IMailService, SmtpMailService>();
+#endif
         }
     }
 }

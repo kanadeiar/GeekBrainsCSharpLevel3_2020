@@ -200,6 +200,24 @@ namespace WpfMailSenderCore.ViewModels
                 return;
             Servers.Remove(server);
         }
+        /// <summary> Команда отправки собщения </summary>
+        public ICommand SendMessageCommand => _sendMailMessageCommand
+            ??= new LambdaCommand(OnSendMessageCommandExecuted, CanSendMailMessageCommand);
+        private ICommand _sendMailMessageCommand;
+        private bool CanSendMailMessageCommand(object p)
+        {
+            return SelectedServer != null && SelectedSender != null && SelectedRecipient != null && SelectedMessage != null;
+        }
+        private void OnSendMessageCommandExecuted(object p)
+        {
+            var server = SelectedServer;
+            var client = _MailService.GetSender(server.Address, server.Port, server.UseSSL, server.Login, server.Password);
+            var sender = SelectedSender;
+            var recipient = SelectedRecipient;
+            var message = SelectedMessage;
+            client.Send(sender.Address, recipient.Address, message.Title, message.Body);
+        }
+
         #endregion
     }
 }
