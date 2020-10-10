@@ -5,11 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:data="clr-namespace:WpfMailSender.Data"
-        xmlns:m="clr-namespace:WpfMailSender.Models;assembly=MailSender.lib"
-        xmlns:l="clr-namespace:WpfMailSender"
+        xmlns:vm="clr-namespace:WpfMailSender.ViewModels"
+        xmlns:cmd="clr-namespace:WpfMailSender.Infrastructure.Commands"
         xmlns:wpftool="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:l="clr-namespace:WpfMailSender"
         mc:Ignorable="d"
-        Title="{StaticResource NameApplication}" Height="500" Width="700" WindowStartupLocation="CenterScreen" Icon="Avatar.ico" ResizeMode="CanResizeWithGrip">
+        Title="{Binding Path=Title}" Height="600" Width="800" WindowStartupLocation="CenterScreen" Icon="Avatar.ico" ResizeMode="CanResizeWithGrip"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <DockPanel>
         <Menu DockPanel.Dock="Top" HorizontalAlignment="Left" BorderBrush="Black">
             <MenuItem Header="Файл">
@@ -17,28 +24,40 @@
                 <MenuItem Header="Открыть"/>
                 <MenuItem Header="Сохранить"/>
                 <Separator/>
-                <MenuItem Header="Выход" Click="MenuItem_OnClick" ToolTip="Выход из приложения"/>
+                <MenuItem Header="Выход" ToolTip="Выход из приложения" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}">
+                    <MenuItem.Command>
+                        <cmd:CloseWindowCommand/>
+                    </MenuItem.Command>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Сервис">
                 <MenuItem Header="Настройка"/>
             </MenuItem>
             <MenuItem Header="Помощь">
-                <MenuItem Header="Справка"/>
+                <MenuItem Header="Справка по программе" Command="{Binding Path=ShowDialogCommand}" CommandParameter
+                          ="C# Уровень 3. Методичка 3. Разработка WPF-приложений c использованием шаблона MVVM на примере MVVM Light Toolkit. Приложение 'Рассыльщик электронной почты'. Выполнил: Рассахатский Андрей."/>
             </MenuItem>
         </Menu>
         <Grid DockPanel.Dock="Top" Background="PaleGreen" Height="40">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Text="Приложение - " FontSize="18"/>
-                <TextBlock Text="{StaticResource NameApplication}" Height="30" FontSize="18"/>
+                <TextBlock Text="{Binding Path=Title}" Height="30" FontSize="18" FontWeight="Bold"/>
             </StackPanel>
         </Grid>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
                 <TextBlock Text="Статус приложения"/>
             </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Текущее время: "/>
+                    <TextBlock Text="{Binding Path=CurrentTime, ConverterCulture=ru-RU, StringFormat=HH:mm:ss.ffff}"/>
+                </StackPanel>
+            </StatusBarItem>
         </StatusBar>
         <TabControl>
-            <TabItem Header="Списки">
+            <TabItem Header="Списки" MinHeight="30">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="59*"/>
@@ -68,22 +87,13 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                             <Button Name="ButtonAddServer" ToolTip="Добавить" Click="ButtonAddServer_OnClick">
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:FontAwesome Icon="Solid_Plus" Foreground="Green" Margin="0,0,3,0"/>
-                                    <TextBlock>Доб.</TextBlock>
-                                </StackPanel>
+                                <fa:FontAwesome Icon="Solid_Plus" Foreground="Green" FontSize="20" Margin="-5,-5"/>
                             </Button>
                             <Button Name="ButtonEditServer" ToolTip="Редактировать" Click="ButtonEditServer_OnClick">
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:FontAwesome Icon="Solid_Edit" Foreground="Yellow" Margin="0,0,3,0"/>
-                                    <TextBlock>Редакт.</TextBlock>
-                                </StackPanel>
+                                <fa:FontAwesome Icon="Solid_Edit" Foreground="Yellow" FontSize="20" Margin="-5,-5"/>
                             </Button>
                             <Button Name="ButtonDeleteServer" ToolTip="Удалить" Click="ButtonDeleteServer_OnClick">
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:FontAwesome Icon="Solid_Times" Foreground="Red" Margin="0,0,3,0"/>
-                                    <TextBlock>Удал.</TextBlock>
-                                </StackPanel>
+                                <fa:FontAwesome Icon="Solid_Times" Foreground="Red" FontSize="20" Margin="-5,-5"/>
                             </Button>
                         </ToolBar>
                         <ToolBar Header="Отправители" Band="1">
@@ -98,31 +108,21 @@
                                         </TextBlock>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
-
                             </ComboBox>
-                            <Button ToolTip="Добавить">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="Resources/Images/add.png" Height="15"/>
-                                    <TextBlock Text="Доб." Margin="3,0,0,0"/>
-                                </StackPanel>
+                            <Button Name="ButtonAddSender" ToolTip="Добавить" >
+                                <fa:FontAwesome Icon="Solid_Plus" Foreground="Green" FontSize="20" Margin="-5,-5"/>
                             </Button>
-                            <Button ToolTip="Редактировать">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="Resources/Images/edit.png" Height="15"/>
-                                    <TextBlock Text="Редакт." Margin="3,0,0,0"/>
-                                </StackPanel>
+                            <Button Name="ButtonEditSender" ToolTip="Редактировать" >
+                                <fa:FontAwesome Icon="Solid_Edit" Foreground="Yellow" FontSize="20" Margin="-5,-5"/>
                             </Button>
-                            <Button ToolTip="Удалить">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="Resources/Images/del.png" Height="15"/>
-                                    <TextBlock Text="Удал." Margin="3,0,0,0"/>
-                                </StackPanel>
+                            <Button Name="ButtonDeleteSender" ToolTip="Удалить" >
+                                <fa:FontAwesome Icon="Solid_Times" Foreground="Red" FontSize="20" Margin="-5,-5"/>
                             </Button>
                         </ToolBar>
                         <ToolBar Header="Планировщик">
                             <Button Name="ButtonToPlan" ToolTip="Запланировать" Click="ButtonToPlan_OnClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <fa:FontAwesome Icon="Solid_Clock" Margin="0,0,3,0" Foreground="Blue"/>
+                                    <fa:FontAwesome Icon="Solid_Clock" Margin="-5,-5,10,-5" FontSize="20" Foreground="Blue"/>
                                     <TextBlock Text="Запланировать"/>
                                 </StackPanel>
                             </Button>
@@ -146,7 +146,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Планировщик" Height="22" VerticalAlignment="Top" Name="TabItemPlan">
+            <TabItem Header="Планировщик" Height="22" VerticalAlignment="Top" Name="TabItemPlan" MinHeight="30">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -155,7 +155,7 @@
                     <GroupBox Grid.Column="0" Header="Планирование" Margin="0,0,3,0">
                         <StackPanel>
                             <TextBlock Text="Дата задания" HorizontalAlignment="Center"/>
-                            <Calendar Name="CalendarPlan" SelectedDate="2020-09-05"/>
+                            <Calendar Name="CalendarPlan" SelectedDate="2020-09-05" Language="ru-RU"/>
                             <wpftool:TimePicker Name="TimePickerPlan"/>
                             <UniformGrid Columns="1" Margin="5">
                                 <Button Content="Запланировать"/>

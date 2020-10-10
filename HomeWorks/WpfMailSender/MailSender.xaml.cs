@@ -20,10 +20,6 @@ namespace WpfMailSender
         }
 
 
-        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
 
         private void ButtonSendNow_OnClick(object sender, RoutedEventArgs e)
         {
