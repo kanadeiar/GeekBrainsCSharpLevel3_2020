@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfMailSenderCore.Windows"
         mc:Ignorable="d"
         Title="Отправитель" 
-        Height="320" Width="300" WindowStartupLocation="CenterOwner">
+        Height="350" Width="300" WindowStartupLocation="CenterOwner">
     <DockPanel Margin="5">
         <DockPanel.Resources>
         </DockPanel.Resources>

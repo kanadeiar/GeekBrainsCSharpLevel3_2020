@@ -14,7 +14,7 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="{Binding Path=Title}" Height="600" Width="800" WindowStartupLocation="CenterScreen" Icon="/Resources/Icons/Avatar.ico" ResizeMode="CanResizeWithGrip"
+        Title="{Binding Title}" Height="600" Width="800" WindowStartupLocation="CenterScreen" Icon="/Resources/Icons/Avatar.ico" ResizeMode="CanResizeWithGrip"
         DataContext="{Binding MainWindowVModel, Source={StaticResource Locator}}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -74,6 +74,12 @@
                                       Width="160" SelectedIndex="0" Margin="34,0,0,0"
                                       ItemsSource="{Binding Path=Servers}" 
                                       SelectedItem="{Binding Path=SelectedServer}">
+                                <ComboBox.ToolTip>
+                                    <TextBlock>
+                                         Адрес: <TextBlock Text="{Binding Path=SelectedServer.Address}"/>
+                                         Порт: <TextBlock Text="{Binding Path=SelectedServer.Port}"/>
+                                    </TextBlock>
+                                </ComboBox.ToolTip>
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock>
@@ -108,7 +114,8 @@
                             <ComboBox Name="ComboBoxSenders" 
                                       Width="160" SelectedIndex="0" Margin="6,0,0,0"
                                       ItemsSource="{Binding Path=Senders}"
-                                      SelectedItem="{Binding Path=SelectedSender}">
+                                      SelectedItem="{Binding Path=SelectedSender}"
+                                      ToolTip="{Binding Path=SelectedSender.Description}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock ToolTip="{Binding Description}">

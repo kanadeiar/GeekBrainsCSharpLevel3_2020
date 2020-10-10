@@ -11,14 +11,14 @@
         <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Text="Получатели писем" 
                    Margin="0,0" FontSize="18" FontWeight="Bold"/>
         <DockPanel DockPanel.Dock="Top" Margin="10,5">
-            <TextBlock Text="Найти:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-            <TextBox ToolTip="Введите слово для поиска"/>
+            <TextBlock Text="Поиск по имени:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <TextBox Text="{Binding Path=RecipientsFilter, UpdateSourceTrigger=PropertyChanged}" ToolTip="Введите имя для поиска"/>
         </DockPanel>
         <UniformGrid DockPanel.Dock="Bottom" HorizontalAlignment="Center" Rows="1" Margin="0,0,0,10">
             <Button Content="Загрузить данные" Padding="40,2" Margin="5,0"
                     Command="{Binding Path=LoadDataCommand}"/>
         </UniformGrid>
-        <DataGrid Name="RecipientsList" Margin="10,5" ItemsSource="{Binding Path=Recipients}"
+        <DataGrid Name="RecipientsList" Margin="10,5" ItemsSource="{Binding Path=FilteredRecipients}"
                   AutoGenerateColumns="False" GridLinesVisibility="Vertical" AlternatingRowBackground="PowderBlue" VerticalGridLinesBrush="Gray">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" MinWidth="50"/>

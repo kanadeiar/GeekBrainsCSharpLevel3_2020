@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -95,7 +96,25 @@ namespace WpfMailSenderCore.ViewModels
             get => _selectedMessage;
             set => Set(ref _selectedMessage, value);
         }
-
+        private string _recipientsFilter;
+        public string RecipientsFilter
+        {
+            get => _recipientsFilter;
+            set
+            {
+                Set(ref _recipientsFilter, value);
+                OnPropertyChanged(nameof(FilteredRecipients));
+            }
+        }
+        public ICollection<Recipient> FilteredRecipients
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(RecipientsFilter))
+                    return Recipients;
+                return Recipients.Where(r => r.Name.ToLower().Contains(RecipientsFilter.ToLower())).ToList();
+            }
+        }
         #endregion
         #region Команды
         /// <summary> Команда показа сообщения </summary>
@@ -114,7 +133,7 @@ namespace WpfMailSenderCore.ViewModels
         {
             ((TabItem)p).IsSelected = true;
         }
-        /// <summary> Команда загрузки данных из файла </summary>
+        /// <summary> Команда загрузки данных </summary>
         public ICommand LoadDataCommand => _loadDataCommand ??= new LambdaCommand(OnLoadDataCommandExecuted);
         private ICommand _loadDataCommand;
         private void OnLoadDataCommandExecuted(object p)
@@ -127,8 +146,9 @@ namespace WpfMailSenderCore.ViewModels
             Senders = new ObservableCollection<Sender>(_senderStorage.Items);
             Recipients = new ObservableCollection<Recipient>(_recipientStorage.Items);
             Messages = new ObservableCollection<Message>(_messageStorage.Items);
+            OnPropertyChanged(nameof(FilteredRecipients));
         }
-        /// <summary> Команда сохранения данных в файле </summary>
+        /// <summary> Команда сохранения данных </summary>
         public ICommand SaveDataCommand => _saveDataCommand ??= new LambdaCommand(OnSaveDataCommandExecuted);
         private ICommand _saveDataCommand;
         private void OnSaveDataCommandExecuted(object p)

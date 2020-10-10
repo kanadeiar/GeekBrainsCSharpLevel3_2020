@@ -1,13 +1,35 @@
-﻿namespace MailSender.Models
+﻿using MailSender.Models.Base;
+
+namespace MailSender.Models
 {
-    public class Server
+    public class Server : Model
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public int Port { get; set; }
+        private string _name;
+        public string Name 
+        {
+            get => _name;
+            set => Set(ref _name, value); 
+        }
+        private string _address;
+        public string Address 
+        { 
+            get => _address; 
+            set => Set(ref _address, value); 
+        }
+        private int _port;
+        public int Port 
+        { 
+            get => _port;
+            set => Set(ref _port, value); 
+        }
         public bool UseSSL { get; set; }
-        public string Desctiption { get; set; }
+        private string _description;
+        public string Desctiption 
+        { 
+            get => _description; 
+            set => Set(ref _description, value); 
+        }
         public string Login { get; set; }
         public string Password { get; set; }
 
