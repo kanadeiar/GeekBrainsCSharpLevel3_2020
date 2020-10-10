@@ -1,6 +1,6 @@
-﻿using WpfMailSender.Models.Base;
+﻿using MailSender.Models.Base;
 
-namespace WpfMailSender.Models
+namespace MailSender.Models
 {
     public class Sender : BaseMailer
     {

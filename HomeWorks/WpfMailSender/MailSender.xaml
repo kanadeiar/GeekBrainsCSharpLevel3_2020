@@ -238,7 +238,6 @@
                                         <Setter Property="Margin" Value="0,5,5,0"/>
                                     </Trigger>
                                 </Style.Triggers>
-
                             </Style>
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>

@@ -1,37 +1,38 @@
-﻿using System.Net;
+﻿using MailSender.Interfaces;
+using System.Net;
 using System.Net.Mail;
 
-namespace WpfMailSender.Services
+namespace MailSender.Services
 {
-    public class SmtpSender
+    public class SmtpSender : IMailSender
     {
         private readonly string _address;
         private readonly int _port;
         private readonly bool _useSsl;
         private readonly string _login;
         private readonly string _password;
-        public SmtpSender(string Address, int Port, bool UseSSL, string Login, string Password)
+        public SmtpSender(string address, int port, bool useSSL, string login, string password)
         {
-            _address = Address;
-            _port = Port;
-            _useSsl = UseSSL;
-            _login = Login;
-            _password = Password;
+            _address = address;
+            _port = port;
+            _useSsl = useSSL;
+            _login = login;
+            _password = password;
         }
 
-        public void Send(string From, string To, string Title, string Message)
+        public void Send(string from, string to, string title, string message)
         {
-            var message = new MailMessage(From, To)
+            var loc_message = new MailMessage(from, to)
             {
-                Subject = Title,
-                Body = Message
+                Subject = title,
+                Body = message
             };
             var client = new SmtpClient(_address, _port)
             {
                 EnableSsl = _useSsl,
                 Credentials = new NetworkCredential(_login, _password)
             };
-            client.Send(message);
+            client.Send(loc_message);
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using System.Collections;
+﻿using MailSender.Models;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using WpfMailSender.Models;
 
 namespace WpfMailSender.Data
 {
