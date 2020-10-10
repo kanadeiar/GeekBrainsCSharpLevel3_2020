@@ -17,7 +17,6 @@ namespace WpfMailSenderCore.ViewModels
     class MainWindowViewModel : ViewModel
     {
         private readonly IMailService _MailService;
-        //private static string __DataFileName = "Data.xml";
         private readonly IServerStorage _serverStorage;
         private readonly ISenderStorage _senderStorage;
         private readonly IRecipientStorage _recipientStorage;
@@ -215,6 +214,63 @@ namespace WpfMailSenderCore.ViewModels
                 return;
             _serverStorage.Items.Remove(server);
             Servers.Remove(server);
+        }
+        /// <summary> Команда создания отправителя </summary>
+        public ICommand CreateSenderCommand => _createSenderCommand ??= new LambdaCommand(OnCreateSenderCommandExecuted);
+        private ICommand _createSenderCommand;
+        private void OnCreateSenderCommandExecuted(object p)
+        {
+            if (!SenderEditWindow.Create(
+                out var name,
+                out var address,
+                out var description))
+                return;
+            int newid = 1;
+            if (Senders.Count != 0)
+                newid = Senders.Max(s => s.Id) + 1;
+            var newSender = new Sender
+            {
+                Id = newid,
+                Name = name,
+                Address = address,
+                Description = description,
+            };
+            _senderStorage.Items.Add(newSender);
+            Senders.Add(newSender);
+        }
+        /// <summary> Команда редактирования отправителя </summary>
+        public ICommand EditSenderCommand => _editSenderCommand
+            ??= new LambdaCommand(OnEditSenderCommandExecuted, CanEditSenderCommandExecute);
+        private ICommand _editSenderCommand;
+        private bool CanEditSenderCommandExecute(object p) => p is Sender;
+        private void OnEditSenderCommandExecuted(object p)
+        {
+            if (!(p is Sender editSender))
+                return;
+            var name = editSender.Name;
+            var address = editSender.Address;
+            var description = editSender.Description;
+            if (!SenderEditWindow.ShowDialog("Редактирование отправителя",
+                ref name,
+                ref address,
+                ref description
+                ))
+                return;
+            editSender.Name = name;
+            editSender.Address = address;
+            editSender.Description = description;
+        }
+        /// <summary> Команда удаления отправителя </summary>
+        public ICommand DeleteSenderComand => _deleteSenderCommand
+            ??= new LambdaCommand(OnDeleteSenderCommandExecuted, CanDeleteSenderCommandExecute);
+        private ICommand _deleteSenderCommand;
+        private bool CanDeleteSenderCommandExecute(object p) => p is Sender;
+        private void OnDeleteSenderCommandExecuted(object p)
+        {
+            if (!(p is Sender sender))
+                return;
+            _senderStorage.Items.Remove(sender);
+            Senders.Remove(sender);
         }
         /// <summary> Команда отправки собщения </summary>
         public ICommand SendMessageCommand => _sendMailMessageCommand

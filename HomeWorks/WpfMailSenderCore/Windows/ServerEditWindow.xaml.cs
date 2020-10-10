@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace WpfMailSenderCore.Windows
 {
@@ -46,7 +38,7 @@ namespace WpfMailSenderCore.Windows
                 TextBoxLogin = { Text = login },
                 PasswordBoxPassword = { Password = password },
                 Owner = Application.Current.Windows.Cast<Window>()
-                .FirstOrDefault(win => win.IsActive),
+                    .FirstOrDefault(win => win.IsActive),
             };
             if (window.ShowDialog() != true)
                 return false;
@@ -59,7 +51,6 @@ namespace WpfMailSenderCore.Windows
             password = window.PasswordBoxPassword.Password;
             return true;
         }
-
         public static bool Create(out string server, out string address, out int port, out bool useSSL, out string description,
             out string login, out string password)
         {

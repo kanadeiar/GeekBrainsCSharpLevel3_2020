@@ -118,13 +118,19 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <Button Name="ButtonAddSeder" ToolTip="Добавить">
+                            <Button Name="ButtonAddSeder" ToolTip="Добавить"
+                                    Command="{Binding Path=CreateSenderCommand}"
+                                    CommandParameter="{Binding Path=SelectedSender}">
                                 <fa:FontAwesome Icon="Solid_Plus" Foreground="Green" FontSize="22" Margin="-5,-5,-5,-5"/>
                             </Button>
-                            <Button Name="ButtonEditSender" ToolTip="Редактировать">
+                            <Button Name="ButtonEditSender" ToolTip="Редактировать"
+                                    Command="{Binding Path=EditSenderCommand}"
+                                    CommandParameter="{Binding Path=SelectedSender}">
                                 <fa:FontAwesome Icon="Solid_Edit" Foreground="Yellow" FontSize="22" Margin="-5,-5,-5,-5"/>
                             </Button>
-                            <Button Name="ButtonDeleteSender" ToolTip="Удалить">
+                            <Button Name="ButtonDeleteSender" ToolTip="Удалить"
+                                    Command="{Binding Path=DeleteSenderComand}"
+                                    CommandParameter="{Binding Path=SelectedSender}">
                                 <fa:FontAwesome Icon="Solid_Times" Foreground="Red" FontSize="22" Margin="-5,-5,-5,-5"/>
                             </Button>
                         </ToolBar>
