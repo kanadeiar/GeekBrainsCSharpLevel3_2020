@@ -6,9 +6,9 @@
         xmlns:vm="clr-namespace:WpfMailSenderCore.ViewModels"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
-        xmlns:data="clr-namespace:WpfMailSenderCore.Data"
         xmlns:local="clr-namespace:WpfMailSenderCore"
         xmlns:cmd="clr-namespace:WpfMailSenderCore.Infrastructure.Commands" 
+        xmlns:views="clr-namespace:WpfMailSenderCore.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -137,25 +137,10 @@
                             </Button>
                         </ToolBar>
                     </ToolBarTray>
-                    <GroupBox Header="Получатели" Grid.Row="1" Grid.ColumnSpan="2">
-                        <DataGrid Name="DataGridRecirients" AutoGenerateColumns="False" GridLinesVisibility="Vertical" AlternatingRowBackground="PowderBlue" VerticalGridLinesBrush="LightSeaGreen" IsReadOnly="True"
-                                  ItemsSource="{Binding Path=Recipients}" 
-                                  SelectedItem="{Binding Path=SelectedRecipient}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" MaxWidth="60"
-                                                    Binding="{Binding Id}"/>
-                                <DataGridTextColumn Header="Имя" MinWidth="120"
-                                                    Binding="{Binding Name}"/>
-                                <DataGridTextColumn Header="Адрес" MinWidth="150"
-                                                    Binding="{Binding Address}"/>
-                                <DataGridTextColumn Header="Описание" Width="*"
-                                                    Binding="{Binding Description}"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </GroupBox>
+                    <views:RecipientsListView Grid.Row="1" Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Планировщик" MinHeight="30">
+            <TabItem Name="TabItemPlan" Header="Планировщик" MinHeight="30">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>

@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Input;
 using MailSender.Interfaces;
 using MailSender.Models;
-using WpfMailSenderCore.Data;
 using WpfMailSenderCore.Infrastructure.Commands;
 using WpfMailSenderCore.ViewModels.Base;
 using WpfMailSenderCore.Windows;
