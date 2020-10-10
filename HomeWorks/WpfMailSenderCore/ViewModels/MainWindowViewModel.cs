@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Timers;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using MailSender.Interfaces;
 using MailSender.Models;
@@ -105,6 +106,14 @@ namespace WpfMailSenderCore.ViewModels
         {
             var message = p as string ?? "Привет, Мир!";
             MessageBox.Show(message, "Сообщение приложения", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        /// <summary> Команда показа вкладки </summary>
+        public ICommand ShowTabItemCommand => _showTabItemCommand ??= new LambdaCommand(OnShowTabItemCommand, CanShowTabItemCommand);
+        private ICommand _showTabItemCommand;
+        private bool CanShowTabItemCommand(object p) => p is TabItem;
+        private void OnShowTabItemCommand(object p)
+        {
+            ((TabItem)p).IsSelected = true;
         }
         /// <summary> Команда загрузки данных из файла </summary>
         public ICommand LoadDataCommand => _loadDataCommand ??= new LambdaCommand(OnLoadDataCommandExecuted);

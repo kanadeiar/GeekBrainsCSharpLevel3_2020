@@ -129,7 +129,7 @@
                             </Button>
                         </ToolBar>
                         <ToolBar Header="Планировщик">
-                            <Button Name="ButtonToPlan" ToolTip="Запланировать">
+                            <Button Name="ButtonToPlan" ToolTip="Запланировать" Command="{Binding Path=ShowTabItemCommand}" CommandParameter="{Binding ElementName=TabItemPlan}">
                                 <StackPanel Orientation="Horizontal">
                                     <fa:FontAwesome Icon="Solid_Clock" Foreground="Blue" FontSize="22" Margin="-5,-5,10,-5" />
                                     <TextBlock Text="Запланировать"/>
