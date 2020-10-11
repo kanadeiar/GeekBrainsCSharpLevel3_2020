@@ -56,6 +56,8 @@ namespace WpfMailSenderCore.ViewModels
             _recipientStorage.SaveChanges();
             _messageStorage.SaveChanges();
         }
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        #region Команды редактирования данных
         /// <summary> Команда создания сервера </summary>
         public ICommand CreateServerCommand => _createServerCommand ??= new LambdaCommand(OnCreateServerCommandExecuted);
         private ICommand _createServerCommand;
@@ -190,6 +192,8 @@ namespace WpfMailSenderCore.ViewModels
             _senderStorage.Items.Remove(sender);
             Senders.Remove(sender);
         }
+        #endregion
+        //////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary> Команда отправки собщения </summary>
         public ICommand SendMessageCommand => _sendMailMessageCommand
             ??= new LambdaCommand(OnSendMessageCommandExecuted, CanSendMailMessageCommand);

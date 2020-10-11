@@ -39,17 +39,17 @@ namespace WpfMailSenderCore
 #else
             services.AddTransient<IMailService, SmtpMailService>();
 #endif
-            var memory_store = new InMemoryDataStorage();
-            services.AddSingleton<IServerStorage>(memory_store);
-            services.AddSingleton<ISenderStorage>(memory_store);
-            services.AddSingleton<IRecipientStorage>(memory_store);
-            services.AddSingleton<IMessageStorage>(memory_store);
-            //const string data_file_name = "storage.xml";
-            //var file_storage = new InXmlFileDataStorage(data_file_name);
-            //services.AddSingleton<IServerStorage>(file_storage);
-            //services.AddSingleton<ISenderStorage>(file_storage);
-            //services.AddSingleton<IRecipientStorage>(file_storage);
-            //services.AddSingleton<IMessageStorage>(file_storage);
+            //var memory_store = new InMemoryDataStorage();
+            //services.AddSingleton<IServerStorage>(memory_store);
+            //services.AddSingleton<ISenderStorage>(memory_store);
+            //services.AddSingleton<IRecipientStorage>(memory_store);
+            //services.AddSingleton<IMessageStorage>(memory_store);
+            const string data_file_name = "storage.xml";
+            var file_storage = new InXmlFileDataStorage(data_file_name);
+            services.AddSingleton<IServerStorage>(file_storage);
+            services.AddSingleton<ISenderStorage>(file_storage);
+            services.AddSingleton<IRecipientStorage>(file_storage);
+            services.AddSingleton<IMessageStorage>(file_storage);
         }
     }
 }

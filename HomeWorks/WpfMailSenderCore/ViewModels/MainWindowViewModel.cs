@@ -48,6 +48,7 @@ namespace WpfMailSenderCore.ViewModels
         {
             OnPropertyChanged(nameof(CurrentTime));
         }
+        ///////////////////////////////////////////////////////////////////////////////////////////////
         private ObservableCollection<Server> _servers;
         public ObservableCollection<Server> Servers
         {
@@ -72,6 +73,7 @@ namespace WpfMailSenderCore.ViewModels
             get => _messages;
             set => Set(ref _messages, value);
         }
+        ///////////////////////////////////////////////////////////////////////////////////////////
         private Server _selectedServer;
         public Server SelectedServer
         {
@@ -96,6 +98,7 @@ namespace WpfMailSenderCore.ViewModels
             get => _selectedMessage;
             set => Set(ref _selectedMessage, value);
         }
+        /////////////////////////////////////////////////////////////////////////////////////////
         private string _recipientsFilter;
         public string RecipientsFilter
         {
