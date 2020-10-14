@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Timers;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 using MailSender.Interfaces;
 using MailSender.Models;
-using WpfMailSenderCore.Infrastructure.Commands;
 using WpfMailSenderCore.ViewModels.Base;
-using WpfMailSenderCore.Windows;
 
 namespace WpfMailSenderCore.ViewModels
 {
@@ -22,6 +16,8 @@ namespace WpfMailSenderCore.ViewModels
         private readonly ISenderStorage _senderStorage;
         private readonly IRecipientStorage _recipientStorage;
         private readonly IMessageStorage _messageStorage;
+        /// <summary> Статистика приложения </summary>
+        public StatisticViewModel _statisticViewModel { get; } = new StatisticViewModel();
         public MainWindowViewModel(IMailService mailService,
             IServerStorage serverStorage, ISenderStorage senderStorage, IRecipientStorage recipientStorage, IMessageStorage messageStorage)
         {

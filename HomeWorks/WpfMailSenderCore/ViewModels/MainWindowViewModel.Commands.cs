@@ -1,9 +1,6 @@
 ﻿using MailSender.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -210,6 +207,7 @@ namespace WpfMailSenderCore.ViewModels
             var recipient = SelectedRecipient;
             var message = SelectedMessage;
             client.Send(sender.Address, recipient.Address, message.Title, message.Body);
+            _statisticViewModel.MessageSended();
         }
 
         #endregion

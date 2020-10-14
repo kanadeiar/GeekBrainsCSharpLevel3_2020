@@ -35,6 +35,10 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Сервис">
+                <MenuItem Header="Параметры" IsEnabled="False"/>
+                <Separator/>
+                <MenuItem Header="Отправить сейчас" Command="{Binding SendMessageCommand}"/>
+                <Separator/>
                 <MenuItem Header="Загрузить данные" Command="{Binding LoadDataCommand}"/>
                 <MenuItem Header="Сохранить данные" Command="{Binding SaveDataCommand}"/>
             </MenuItem>
@@ -268,7 +272,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Grid.Row="0" Text="Отправлено писем: "/>
-                        <TextBlock Grid.Column="1" Grid.Row="0" Text="0 шт."/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=_statisticViewModel.SendMessagesCount, StringFormat={}{0} шт.}"/>
                         <TextBlock Grid.Column="0" Grid.Row="1" Text="Всего отправителей: "/>
                         <TextBlock Grid.Column="1" Grid.Row="1" Text="0 шт."/>
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Всего получателей: "/>
