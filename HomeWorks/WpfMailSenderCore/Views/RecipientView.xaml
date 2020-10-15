@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WpfMailSenderCore.Views.RecipientsListView"
+﻿<UserControl x:Class="WpfMailSenderCore.Views.RecipientView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -19,7 +19,7 @@
                     Command="{Binding Path=LoadDataCommand}"/>
         </UniformGrid>
         <DataGrid Name="RecipientsList" Margin="10,5" ItemsSource="{Binding Path=FilteredRecipients}" SelectedItem="{Binding Path=SelectedRecipient}"
-                  AutoGenerateColumns="False" GridLinesVisibility="Vertical" AlternatingRowBackground="PowderBlue" VerticalGridLinesBrush="Gray">
+                  AutoGenerateColumns="False" GridLinesVisibility="Vertical" AlternatingRowBackground="PowderBlue" VerticalGridLinesBrush="Gray" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" MinWidth="50"/>
                 <DataGridTextColumn Header="Имя" Binding="{Binding Path=Name}" MinWidth="200"/>

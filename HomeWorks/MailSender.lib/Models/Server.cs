@@ -2,11 +2,10 @@
 
 namespace MailSender.Models
 {
-    public class Server : Model
+    public class Server : NamedModel
     {
-        public int Id { get; set; }
         private string _name;
-        public string Name 
+        public new string Name 
         {
             get => _name;
             set => Set(ref _name, value); 

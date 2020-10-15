@@ -2,7 +2,7 @@
 
 namespace MailSender.Models
 {
-    public class Sender : BaseMailer
+    public class Sender : BasePerson
     {
     }
 }

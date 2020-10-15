@@ -4,7 +4,6 @@ namespace MailSender.Models
 {
     public class Message : Model
     {
-        public int Id { get; set; }
         private string _title;
         public string Title 
         { 

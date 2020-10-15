@@ -3,8 +3,10 @@ using System.Runtime.CompilerServices;
 
 namespace MailSender.Models.Base
 {
+    /// <summary> Модель </summary>
     public abstract class Model : INotifyPropertyChanged
     {
+        public int Id { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -16,5 +18,15 @@ namespace MailSender.Models.Base
             field = value;
             OnPropertyChanged(propertyName);
         }
+    }
+    /// <summary> Именованная модель </summary>
+    public abstract class NamedModel : Model
+    {
+        public string Name { get; set; }
+    }
+    /// <summary> Именованная модель с адресом </summary>
+    public abstract class PersonModel : NamedModel
+    {
+        public string Address { get; set; }
     }
 }

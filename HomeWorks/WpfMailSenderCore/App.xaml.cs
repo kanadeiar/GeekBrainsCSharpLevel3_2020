@@ -3,11 +3,6 @@ using MailSender.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using WpfMailSenderCore.ViewModels;
 
@@ -39,6 +34,8 @@ namespace WpfMailSenderCore
 #else
             services.AddTransient<IMailService, SmtpMailService>();
 #endif
+            services.AddSingleton<IEncryptService, Rfc2898Encryptor>();
+
             var memory_store = new InMemoryDataStorage();
             services.AddSingleton<IServerStorage>(memory_store);
             services.AddSingleton<ISenderStorage>(memory_store);

@@ -1,16 +1,15 @@
 ﻿namespace MailSender.Models.Base
 {
-    public abstract class BaseMailer : Model
+    public abstract class BasePerson : PersonModel
     {
-        public int Id { get; set; }
         private string _name;
-        public string Name 
+        public new string Name 
         { 
             get => _name; 
             set => Set(ref _name, value); 
         }
         private string _address;
-        public string Address 
+        public new string Address 
         { 
             get => _address; 
             set => Set(ref _address, value); 
