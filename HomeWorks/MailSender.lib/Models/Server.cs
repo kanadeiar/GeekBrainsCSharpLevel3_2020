@@ -5,7 +5,7 @@ namespace MailSender.Models
     public class Server : NamedModel
     {
         private string _name;
-        public new string Name 
+        public override string Name 
         {
             get => _name;
             set => Set(ref _name, value); 

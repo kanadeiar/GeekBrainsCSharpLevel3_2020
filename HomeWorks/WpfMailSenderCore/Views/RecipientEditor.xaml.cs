@@ -7,9 +7,15 @@ namespace WpfMailSenderCore.Views
     /// </summary>
     public partial class RecipientEditor : UserControl
     {
-        public RecipientEditor()
+        public RecipientEditor() => InitializeComponent();
+
+        private void Validation_OnError(object? sender, ValidationErrorEventArgs e)
         {
-            InitializeComponent();
+            var control = (Control) sender;
+            if (control != null && e.Action == ValidationErrorEventAction.Added)
+                control.ToolTip = e.Error.ErrorContent.ToString();
+            else
+                control?.ClearValue(ToolTipProperty);
         }
     }
 }

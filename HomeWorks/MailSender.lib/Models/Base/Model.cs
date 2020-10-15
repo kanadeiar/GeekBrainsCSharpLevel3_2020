@@ -22,11 +22,11 @@ namespace MailSender.Models.Base
     /// <summary> Именованная модель </summary>
     public abstract class NamedModel : Model
     {
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
     }
     /// <summary> Именованная модель с адресом </summary>
     public abstract class PersonModel : NamedModel
     {
-        public string Address { get; set; }
+        public virtual string Address { get; set; }
     }
 }
