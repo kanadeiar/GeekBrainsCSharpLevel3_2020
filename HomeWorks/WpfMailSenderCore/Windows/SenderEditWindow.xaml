@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:WpfMailSenderCore.Windows"
         mc:Ignorable="d"
         Title="Отправитель" 
-        Height="350" Width="300" WindowStartupLocation="CenterOwner">
+        Height="350" Width="300" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
     <DockPanel Margin="5">
         <DockPanel.Resources>
         </DockPanel.Resources>
         <UniformGrid DockPanel.Dock="Bottom" Rows="1" HorizontalAlignment="Left" Margin="10"
                      Button.Click="ButtonBase_Click">
-            <Button Content="Ok" IsDefault="True"/>
-            <Button Content="Отмена" IsCancel="True"/>
+            <Button Content="Ok" IsDefault="True" Margin="5,0"/>
+            <Button Content="Отмена" IsCancel="True" Margin="5,0"/>
         </UniformGrid>
         <GroupBox Header="Имя" DockPanel.Dock="Top">
             <TextBox Name="TextBoxName" x:FieldModifier="private"/>
