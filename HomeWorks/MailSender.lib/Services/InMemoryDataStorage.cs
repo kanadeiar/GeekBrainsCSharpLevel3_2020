@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Security;
 using System.Text;
 
 namespace MailSender.Services
@@ -33,7 +35,7 @@ namespace MailSender.Services
                         Port = 465,
                         UseSSL = true,
                         Login = "user@yandex.ru",
-                        Password = "Password",
+                        Password = new NetworkCredential("","Password").SecurePassword,
                     },
                     new Server
                     {
@@ -43,7 +45,7 @@ namespace MailSender.Services
                         Port = 465,
                         UseSSL = true,
                         Login = "user@gmail.com",
-                        Password = "Password",
+                        Password = new NetworkCredential("","Password").SecurePassword,
                     }
                 };
             };

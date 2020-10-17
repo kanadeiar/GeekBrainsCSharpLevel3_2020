@@ -73,7 +73,7 @@ namespace WpfMailSender
                 Address = address,
                 Port = port,
                 UseSSL = ssl,
-                Desctiption = description,
+                Description = description,
                 Login = login,
                 Password = password
             };
@@ -94,7 +94,7 @@ namespace WpfMailSender
             var address = server.Address;
             var port = server.Port;
             var ssl = server.UseSSL;
-            var description = server.Desctiption;
+            var description = server.Description;
             var login = server.Login;
             var password = server.Password;
 
@@ -112,7 +112,7 @@ namespace WpfMailSender
             server.Address = address;
             server.Port = port;
             server.UseSSL = ssl;
-            server.Desctiption = description;
+            server.Description = description;
             server.Login = login;
             server.Password = password;
 

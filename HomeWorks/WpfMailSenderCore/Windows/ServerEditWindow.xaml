@@ -63,7 +63,8 @@
                 <TextBox Name="TextBoxLogin" Text="{Binding Path=Login, ValidatesOnDataErrors=True}"/>
             </GroupBox>
             <GroupBox Header="Пароль">
-                <TextBox Name="PasswordBoxPassword" Text="{Binding Path=Password, ValidatesOnDataErrors=True}"/>
+                <!--<PasswordBox Name="PasswordBoxPassword" Password="{Binding Path=Password, ValidatesOnDataErrors=True}"/>-->
+                <PasswordBox Name="PasswordBoxPassword"/>
             </GroupBox>
         </UniformGrid>
         <GroupBox Header="Описание">

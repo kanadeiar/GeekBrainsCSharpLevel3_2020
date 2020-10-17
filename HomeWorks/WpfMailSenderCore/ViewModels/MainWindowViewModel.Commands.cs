@@ -1,6 +1,7 @@
 ﻿using MailSender.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -79,7 +80,7 @@ namespace WpfMailSenderCore.ViewModels
                 Address = address,
                 Port = port,
                 UseSSL = useSSL,
-                Desctiption = description,
+                Description = description,
                 Login = login,
                 Password = password,
             };
@@ -99,7 +100,7 @@ namespace WpfMailSenderCore.ViewModels
             var address = editServer.Address;
             var port = editServer.Port;
             var useSSL = editServer.UseSSL;
-            var description = editServer.Desctiption;
+            var description = editServer.Description;
             var login = editServer.Login;
             var password = editServer.Password;
             if (!ServerEditWindow.ShowDialog("Редактирование сервера",
@@ -116,7 +117,7 @@ namespace WpfMailSenderCore.ViewModels
             editServer.Address = address;
             editServer.Port = port;
             editServer.UseSSL = useSSL;
-            editServer.Desctiption = description;
+            editServer.Description = description;
             editServer.Login = login;
             editServer.Password = password;
         }
@@ -202,7 +203,7 @@ namespace WpfMailSenderCore.ViewModels
         private void OnSendMessageCommandExecuted(object p)
         {
             var server = SelectedServer;
-            var client = _mailService.GetSender(server.Address, server.Port, server.UseSSL, server.Login, server.Password);
+            var client = _mailService.GetSender(server.Address, server.Port, server.UseSSL, server.Login, new NetworkCredential("", server.Password).Password);
             var sender = SelectedSender;
             var recipient = SelectedRecipient;
             var message = SelectedMessage;
