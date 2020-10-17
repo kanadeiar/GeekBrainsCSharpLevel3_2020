@@ -11,17 +11,17 @@ namespace WpfMailSenderCore.ViewModels
 {
     partial class MainWindowViewModel : ViewModel
     {
-        private readonly IMailService _MailService;
+        private readonly IMailService _mailService;
         private readonly IServerStorage _serverStorage;
         private readonly ISenderStorage _senderStorage;
         private readonly IRecipientStorage _recipientStorage;
         private readonly IMessageStorage _messageStorage;
         /// <summary> Статистика приложения </summary>
-        public StatisticViewModel _statisticViewModel { get; } = new StatisticViewModel();
+        public StatisticViewModel StatisticViewModel { get; } = new StatisticViewModel();
         public MainWindowViewModel(IMailService mailService,
             IServerStorage serverStorage, ISenderStorage senderStorage, IRecipientStorage recipientStorage, IMessageStorage messageStorage)
         {
-            _MailService = mailService;
+            _mailService = mailService;
             _serverStorage = serverStorage;
             _senderStorage = senderStorage;
             _recipientStorage = recipientStorage;

@@ -202,12 +202,12 @@ namespace WpfMailSenderCore.ViewModels
         private void OnSendMessageCommandExecuted(object p)
         {
             var server = SelectedServer;
-            var client = _MailService.GetSender(server.Address, server.Port, server.UseSSL, server.Login, server.Password);
+            var client = _mailService.GetSender(server.Address, server.Port, server.UseSSL, server.Login, server.Password);
             var sender = SelectedSender;
             var recipient = SelectedRecipient;
             var message = SelectedMessage;
             client.Send(sender.Address, recipient.Address, message.Title, message.Body);
-            _statisticViewModel.MessageSended();
+            StatisticViewModel.MessageSended();
         }
 
         #endregion

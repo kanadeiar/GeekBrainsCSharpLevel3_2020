@@ -282,7 +282,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Grid.Row="0" Text="Отправлено писем: "/>
-                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=_statisticViewModel.SendMessagesCount, StringFormat={}{0} шт.}"/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=StatisticViewModel.SendMessagesCount, StringFormat={}{0} шт.}"/>
                         <TextBlock Grid.Column="0" Grid.Row="1" Text="Всего отправителей: "/>
                         <TextBlock Grid.Column="1" Grid.Row="1" Text="0 шт."/>
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Всего получателей: "/>
