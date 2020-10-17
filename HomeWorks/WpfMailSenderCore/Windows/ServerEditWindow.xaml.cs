@@ -49,6 +49,7 @@ namespace WpfMailSenderCore.Windows
                     .FirstOrDefault(win => win.IsActive),
             };
             window.DockPanelServerEdit.DataContext = window.Server;
+            #region Танцы с паролем
             Binding passwordBinding = new Binding(SecurePasswordProperty.Name);
             passwordBinding.Source = window.Server;
             passwordBinding.ValidatesOnDataErrors = true;
@@ -57,6 +58,7 @@ namespace WpfMailSenderCore.Windows
             {
                 window.Server.Password = window.PasswordBoxPassword.SecurePassword;
             };
+            #endregion
             if (window.ShowDialog() != true)
                 return false;
             server = window.Server.Name;

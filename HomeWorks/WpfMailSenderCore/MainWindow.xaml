@@ -22,6 +22,32 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <DockPanel>
+        <DockPanel.Resources>
+            <Style BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="TextBox">
+                <Setter Property="Margin" Value="0,0,5,0"/>
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <DockPanel>
+                                <TextBlock DockPanel.Dock="Right" Text="!" FontSize="20" FontWeight="Bold" Margin="1,0" 
+                                           Padding="3,0" Foreground="Red" Background="Yellow" VerticalAlignment="Center"
+                                           ToolTip="{Binding AdornedElement.(Validation.Errors)[0].ErrorContent, ElementName=ErrorVisualElement}"/>
+                                <Border Padding="2" BorderBrush="Red" BorderThickness="3" CornerRadius="3">
+                                    <AdornedElementPlaceholder Name="ErrorVisualElement"/>
+                                </Border>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError" Value="True">
+                        <Setter Property="Background" Value="Pink"/>
+                        <Setter Property="ToolTip"
+                                Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </DockPanel.Resources>
         <Menu DockPanel.Dock="Top" HorizontalAlignment="Left">
             <MenuItem Header="Файл">
                 <MenuItem Header="Создать"/>
@@ -245,11 +271,11 @@
                         </ListBox>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Grid.Row="0" Header="Заголовок письма">
-                        <TextBox Text="{Binding SelectedItem.Title, ElementName=ListBoxMessages}"/>
+                        <TextBox Text="{Binding SelectedItem.Title, ElementName=ListBoxMessages, ValidatesOnDataErrors=True}"/>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Grid.Row="1" Header="Текст письма">
-                        <TextBox Name="TextBoxMailMessage" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" Background="White"
-                                 Text="{Binding SelectedItem.Body, ElementName=ListBoxMessages}"/>
+                        <TextBox Name="TextBoxMailMessage" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
+                                 Text="{Binding SelectedItem.Body, ElementName=ListBoxMessages, ValidatesOnDataErrors=True}"/>
                     </GroupBox>
                 </Grid>
             </TabItem>

@@ -30,7 +30,6 @@ namespace MailSender.Models
                         if (name.Length > 20) return "Имя не должно быть длиннее 20 символов";
                         return null;
                     case nameof(Address):
-
                         return null;
                     default:
                         return null;
