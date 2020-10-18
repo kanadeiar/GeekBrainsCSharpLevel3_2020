@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace WpfMailSender.Data
 {
@@ -17,7 +18,7 @@ namespace WpfMailSender.Data
                 Port = 465,
                 UseSSL = true,
                 Login = "user@yandex.ru",
-                Password = "Password",
+                Password = new NetworkCredential("","Password").SecurePassword,
             },
             new Server
             {
@@ -27,7 +28,7 @@ namespace WpfMailSender.Data
                 Port = 465,
                 UseSSL = true,
                 Login = "user@gmail.com",
-                Password = "Password",
+                Password = new NetworkCredential("","Password").SecurePassword,
             }
         };
 

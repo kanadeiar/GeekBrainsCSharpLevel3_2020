@@ -3,6 +3,7 @@ using MailSender.Services;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Windows;
 using WpfMailSender.Data;
 using WpfMailSender.Windows;
@@ -35,7 +36,7 @@ namespace WpfMailSender
                 return;
             }
             
-            var mailSender = new SmtpSender(server.Address, server.Port, server.UseSSL, server.Login, server.Password);
+            var mailSender = new SmtpSender(server.Address, server.Port, server.UseSSL, server.Login, new NetworkCredential("",server.Password).Password);
 
             try
             {
@@ -75,7 +76,7 @@ namespace WpfMailSender
                 UseSSL = ssl,
                 Description = description,
                 Login = login,
-                Password = password
+                Password = new NetworkCredential("",password).SecurePassword,
             };
 
             TestData.Servers.Add(server);
