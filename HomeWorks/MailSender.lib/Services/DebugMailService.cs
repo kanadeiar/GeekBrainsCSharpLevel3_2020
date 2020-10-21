@@ -1,5 +1,9 @@
-﻿using MailSender.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using MailSender.Interfaces;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MailSender.Services
 {
@@ -26,6 +30,22 @@ namespace MailSender.Services
             {
                 Debug.WriteLine($"Почтовый сервер {_address}:{_port}(ssl:{(_useSsl?"да":"нет")}[логин: {_login} - пароль: {_password}])");
                 Debug.WriteLine($"Отправка письма от {from} к {to} тема: {title} текст: {message}");
+            }
+            public void Send(string from, IEnumerable<string> tos, string title, string message)
+            {
+                foreach (var to in tos)
+                {
+                    Send(from, to, title, message);
+                }
+            }
+            public async Task SendAsync(string @from, string to, string title, string message, CancellationToken cancel = default)
+            {
+
+            }
+            public async Task SendAsync(string @from, IEnumerable<string> tos, string title, string body, IProgress<(string to, double percent)> progress = null,
+                CancellationToken cancel = default)
+            {
+
             }
         }
     }
