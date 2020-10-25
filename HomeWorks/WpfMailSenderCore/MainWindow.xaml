@@ -202,9 +202,9 @@
                     <GroupBox Grid.Column="0" Header="Планирование" Margin="0,0,3,0">
                         <StackPanel>
                             <TextBlock Text="Дата и время задания" HorizontalAlignment="Center"/>
-                            <DatePicker materialDesign:HintAssist.Hint="Выберите дату" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Language="ru-RU"/>
+                            <DatePicker Name="DatePickerPlanDate" materialDesign:HintAssist.Hint="Выберите дату" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Language="ru-RU"/>
                             <!--<Calendar Name="CalendarPlan" SelectedDate="2020-09-05" Language="ru-RU"/>-->
-                            <materialDesign:TimePicker materialDesign:HintAssist.Hint="Выберите время"/>
+                            <materialDesign:TimePicker Name="TimePickerPlanTime" materialDesign:HintAssist.Hint="Выберите время"/>
                             <UniformGrid Columns="1" Margin="5">
                                 <Button x:Name="ButtinSendPlan" Margin="0,0,0,4">
                                     <StackPanel Orientation="Horizontal">
