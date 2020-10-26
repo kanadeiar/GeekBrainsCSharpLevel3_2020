@@ -16,6 +16,13 @@ namespace MailSender.Services
         private readonly bool _useSsl;
         private readonly string _login;
         private readonly string _password;
+
+        private readonly ISmtpSenderSmtpClient _smtpClient;
+        public SmtpSender(string address, int port, bool useSSL, string login, string password, ISmtpSenderSmtpClient smtpClient) :
+            this(address, port, useSSL, login, password)
+        {
+            _smtpClient = smtpClient;
+        }
         public SmtpSender(string address, int port, bool useSSL, string login, string password)
         {
             _address = address;
@@ -23,6 +30,7 @@ namespace MailSender.Services
             _useSsl = useSSL;
             _login = login;
             _password = password;
+            _smtpClient = new SmtpSenderSmtpClient();
         }
         public void Send(string from, string to, string title, string message)
         {
@@ -31,14 +39,10 @@ namespace MailSender.Services
                 Subject = title,
                 Body = message
             };
-            var client = new SmtpClient(_address, _port)
-            {
-                EnableSsl = _useSsl,
-                Credentials = new NetworkCredential(_login, _password)
-            };
+            _smtpClient.NewSmtpClient(_address, _port, _useSsl, new NetworkCredential(_login, _password));
             try
             {
-                client.Send(locMessage);
+                _smtpClient.Send(locMessage);
             }
             catch (Exception e)
             {
@@ -60,15 +64,12 @@ namespace MailSender.Services
                 Subject = title,
                 Body = message
             };
-            var client = new SmtpClient(_address, _port)
-            {
-                EnableSsl = _useSsl,
-                Credentials = new NetworkCredential(_login, _password)
-            };
+            _smtpClient.NewSmtpClient(_address,_port,_useSsl, new NetworkCredential(_login, _password));
             try
             {
                 cancel.ThrowIfCancellationRequested();
-                await client.SendMailAsync(new MailMessage(from, to)).ConfigureAwait(false);
+
+                await _smtpClient.SendMailAsync(locMessage).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -81,5 +82,29 @@ namespace MailSender.Services
         {
             
         }
+        private class SmtpSenderSmtpClient : ISmtpSenderSmtpClient
+        {
+            private SmtpClient client;
+            public void NewSmtpClient(string address, int port, bool useSsl, NetworkCredential credential)
+            {
+                client = new SmtpClient(address, port);
+                client.EnableSsl = useSsl;
+                client.Credentials = credential;
+            }
+            public void Send(MailMessage message)
+            {
+                client.Send(message);
+            }
+            public async Task SendMailAsync(MailMessage message)
+            {
+                await client.SendMailAsync(message).ConfigureAwait(false);
+            }
+        }
+    }
+    public interface ISmtpSenderSmtpClient
+    {
+        void NewSmtpClient(string address, int port, bool useSsl, NetworkCredential credential);
+        void Send(MailMessage message);
+        Task SendMailAsync(MailMessage message);
     }
 }
