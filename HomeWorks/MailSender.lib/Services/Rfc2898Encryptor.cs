@@ -7,6 +7,9 @@ using MailSender.Interfaces;
 
 namespace MailSender.Services
 {
+    /// <summary>
+    /// Шифровальщик данных
+    /// </summary>
     public class Rfc2898Encryptor : IEncryptService
     {
         private static readonly byte[] Salt =
@@ -62,7 +65,7 @@ namespace MailSender.Services
                 return stream.ToArray();
             }
         }
-        /// <summary> Шифровка </summary>
+        /// <summary> Шифровка строки </summary>
         public string Encrypt(string str, string password)
         {
             var encoding = Encoding ?? Encoding.UTF8;
@@ -70,7 +73,7 @@ namespace MailSender.Services
             var encryptedBytes = Encrypt(bytes, password);
             return Convert.ToBase64String(encryptedBytes);
         }
-        /// <summary> Расшифровка </summary>
+        /// <summary> Расшифровка строки </summary>
         public string Decrypt(string str, string password)
         {
             var encryptedBytes = Convert.FromBase64String(str);

@@ -36,7 +36,8 @@ namespace WpfMailSender
                 return;
             }
             
-            var mailSender = new SmtpSender(server.Address, server.Port, server.UseSSL, server.Login, new NetworkCredential("",server.Password).Password);
+            var service = new SmtpMailService();
+            var mailSender = service.GetSender(server.Address, server.Port, server.UseSSL, server.Login, new NetworkCredential("",server.Password).Password);
 
             try
             {

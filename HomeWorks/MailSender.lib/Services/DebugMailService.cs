@@ -3,6 +3,9 @@ using System.Diagnostics;
 
 namespace MailSender.Services
 {
+    /// <summary>
+    /// Тестовый сервис отправки письма по почте - реально только текст в дебажную консоль
+    /// </summary>
     public class DebugMailService : IMailService
     {
         public IMailSender GetSender(string address, int port, bool useSSL, string login, string password)

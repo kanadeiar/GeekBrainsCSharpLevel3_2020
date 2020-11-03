@@ -10,6 +10,9 @@ using System.Text;
 
 namespace MailSender.Services
 {
+    /// <summary>
+    /// Хранилище данных в оперативной памяти
+    /// </summary>
     public class InMemoryDataStorage : IServerStorage, ISenderStorage, IRecipientStorage, IMessageStorage
     {
         public ICollection<Server> Servers { get; set; }

@@ -36,11 +36,11 @@ namespace WpfMailSenderCore
 #endif
             services.AddSingleton<IEncryptService, Rfc2898Encryptor>();
 
-            var memory_store = new InMemoryDataStorage();
-            services.AddSingleton<IServerStorage>(memory_store);
-            services.AddSingleton<ISenderStorage>(memory_store);
-            services.AddSingleton<IRecipientStorage>(memory_store);
-            services.AddSingleton<IMessageStorage>(memory_store);
+            var memoryStore = new InMemoryDataStorage();
+            services.AddSingleton<IServerStorage>(memoryStore);
+            services.AddSingleton<ISenderStorage>(memoryStore);
+            services.AddSingleton<IRecipientStorage>(memoryStore);
+            services.AddSingleton<IMessageStorage>(memoryStore);
             //const string dataFileName = "storage.xml";
             //var fileStorage = new InXmlFileDataStorage(dataFileName);
             //services.AddSingleton<IServerStorage>(fileStorage);

@@ -5,6 +5,9 @@ using System.Text;
 
 namespace MailSender.Services
 {
+    /// <summary>
+    /// Простой шифровальщик алгоритмом Цезаря
+    /// </summary>
     public class TextEncoder
     {
         public static string Encode(string str, int key = 1)
