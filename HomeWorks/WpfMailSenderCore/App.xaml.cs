@@ -20,9 +20,9 @@ namespace WpfMailSenderCore
             {
                 if (__Hosting != null) 
                     return __Hosting;
-                var host_builder = Host.CreateDefaultBuilder(Environment.GetCommandLineArgs());
-                host_builder.ConfigureServices(ConfigureServices);
-                return __Hosting = host_builder.Build();
+                var hostBuilder = Host.CreateDefaultBuilder(Environment.GetCommandLineArgs());
+                hostBuilder.ConfigureServices(ConfigureServices);
+                return __Hosting = hostBuilder.Build();
             }
         }
         public static IServiceProvider Services => Hosting.Services;
