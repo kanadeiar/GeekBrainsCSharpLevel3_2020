@@ -206,7 +206,7 @@
                             <!--<Calendar Name="CalendarPlan" SelectedDate="2020-09-05" Language="ru-RU"/>-->
                             <materialDesign:TimePicker materialDesign:HintAssist.Hint="Выберите время"/>
                             <UniformGrid Columns="1" Margin="5">
-                                <Button x:Name="ButtinSendPlan" Margin="0,0,0,4">
+                                <Button x:Name="ButtonSendPlan" Margin="0,0,0,4" Click="ButtonSendPlan_OnClick">
                                     <StackPanel Orientation="Horizontal">
                                         <fa:FontAwesome Icon="Regular_Clock" Margin="0,0,5,0" Foreground="Aqua"/>
                                         <TextBlock>Запланировать</TextBlock>
@@ -227,7 +227,7 @@
                                 <Border BorderBrush="Green" BorderThickness="1" Padding="4" CornerRadius="4">
                                     <Grid>
                                         <StackPanel>
-                                            <TextBlock Text="Дата: 01.12.2020"/>
+                                            <TextBlock Text="Дата: 01.12.2020 12:00"/>
                                             <TextBlock Text="Отправитель: Админ"/>
                                             <TextBlock Text="Получатель: Пользователь"/>
                                             <TextBlock Text="Тема письма: Тест"/>
@@ -240,7 +240,7 @@
                                 <Border BorderBrush="Green" BorderThickness="1" Padding="4" CornerRadius="4">
                                     <Grid>
                                         <StackPanel>
-                                            <TextBlock Text="Дата: 01.12.2020"/>
+                                            <TextBlock Text="Дата: 01.12.2020 12:00"/>
                                             <TextBlock Text="Отправитель: Админ"/>
                                             <TextBlock Text="Получатель: Пользователь"/>
                                             <TextBlock Text="Тема письма: Тест"/>

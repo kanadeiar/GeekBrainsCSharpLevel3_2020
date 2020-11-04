@@ -1,4 +1,7 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net;
 using System.Net.Mail;
 using MailSender.Interfaces;
 
@@ -28,10 +31,9 @@ namespace MailSender.Services
                 _login = login;
                 _password = password;
             }
-
             public void Send(string from, string to, string title, string message)
             {
-                var loc_message = new MailMessage(from, to)
+                var locMessage = new MailMessage(from, to)
                 {
                     Subject = title,
                     Body = message
@@ -41,7 +43,22 @@ namespace MailSender.Services
                     EnableSsl = _useSsl,
                     Credentials = new NetworkCredential(_login, _password)
                 };
-                client.Send(loc_message);
+                try
+                {
+                    client.Send(locMessage);
+                }
+                catch (Exception e)
+                {
+                    Trace.TraceError(e.Message);
+                    throw;
+                }
+            }
+            public void Send(string from, IEnumerable<string> tos, string title, string message)
+            {
+                foreach (var to in tos)
+                {
+                    Send(from, to, title, message);
+                }
             }
         }
     }

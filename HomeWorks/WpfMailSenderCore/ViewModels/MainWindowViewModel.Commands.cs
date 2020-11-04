@@ -12,7 +12,6 @@ namespace WpfMailSenderCore.ViewModels
 {
     partial class MainWindowViewModel
     {
-        #region Команды
         /// <summary> Команда показа сообщения </summary>
         public ICommand ShowDialogCommand => _showDialogCommand ??= new LambdaCommand(OnShowDialogCommandExecuted);
         private ICommand _showDialogCommand;
@@ -210,7 +209,7 @@ namespace WpfMailSenderCore.ViewModels
             client.Send(sender.Address, recipient.Address, message.Title, message.Body);
             StatisticViewModel.MessageSended();
         }
+        
 
-        #endregion
     }
 }

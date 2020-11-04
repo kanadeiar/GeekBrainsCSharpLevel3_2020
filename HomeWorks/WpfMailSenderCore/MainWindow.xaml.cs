@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using MailSender.Interfaces;
 using MailSender.Services;
 
@@ -23,6 +24,15 @@ namespace WpfMailSenderCore
             var encryptString = encryptor.Encrypt(str, password);
             var decryptedString = encryptor.Decrypt(encryptString, password);
             MessageBox.Show($"Зашифрованное слово: {encryptString} Расшифрованное: {decryptedString}");
+        }
+
+        private void ButtonSendPlan_OnClick(object sender, RoutedEventArgs e)
+        {
+            var scheduler = new SchedulerMailService();
+            var debug = new DebugMailService();
+            var two = debug.GetSender("smtp.mail.ru", 12, true, "gg", "tt");
+            var one = scheduler.GetScheduler(two);
+            one.Send(DateTime.Now.AddSeconds(10), "from@mail.ru", "to@mail.ru", "123", "text");
         }
     }
 }

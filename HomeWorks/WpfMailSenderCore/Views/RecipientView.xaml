@@ -19,7 +19,7 @@
                     Command="{Binding Path=LoadDataCommand}"/>
         </UniformGrid>
         <DataGrid Name="RecipientsList" Margin="10,5" ItemsSource="{Binding Path=FilteredRecipients}" SelectedItem="{Binding Path=SelectedRecipient}"
-                  AutoGenerateColumns="False" GridLinesVisibility="Vertical" AlternatingRowBackground="PowderBlue" VerticalGridLinesBrush="Gray" IsReadOnly="True" SelectionMode="Single">
+                  AutoGenerateColumns="False" GridLinesVisibility="Vertical" AlternatingRowBackground="PowderBlue" VerticalGridLinesBrush="Gray" IsReadOnly="True" SelectionMode="Extended">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" MinWidth="40"/>
                 <DataGridTextColumn Header="Имя" Binding="{Binding Path=Name}" MinWidth="150"/>
