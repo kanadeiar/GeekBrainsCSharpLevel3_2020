@@ -209,7 +209,24 @@ namespace WpfMailSenderCore.ViewModels
             client.Send(sender.Address, recipient.Address, message.Title, message.Body);
             StatisticViewModel.MessageSended();
         }
-        
+
+        private ICommand _schedulerSendMailMessageCommand;
+        private bool CanSchedulerSendMailMessageCommand(object p)
+        {
+            return SelectedDate != null;
+        }
+        private void OnShedulerSendMailMessageCommand(object p)
+        {
+            var server = SelectedServer;
+            var client = _mailService.GetSender(server.Address, server.Port, server.UseSSL, server.Login, new NetworkCredential("", server.Password).Password);
+            var scheduler = _schedulerMail.GetScheduler(client);
+            var sender = SelectedSender;
+            var recipient = SelectedRecipient;
+            var message = SelectedMessage;
+            var date = SelectedDate;
+            scheduler.AddTaskSend(date, sender.Address, recipient.Address, message.Title, message.Body);
+            
+        }
 
     }
 }

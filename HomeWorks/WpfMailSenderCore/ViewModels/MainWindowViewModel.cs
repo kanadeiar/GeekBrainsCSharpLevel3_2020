@@ -16,16 +16,18 @@ namespace WpfMailSenderCore.ViewModels
         private readonly ISenderStorage _senderStorage;
         private readonly IRecipientStorage _recipientStorage;
         private readonly IMessageStorage _messageStorage;
+        private readonly ISchedulerMailService _schedulerMail;
         /// <summary> Статистика приложения </summary>
         public StatisticViewModel StatisticViewModel { get; } = new StatisticViewModel();
         public MainWindowViewModel(IMailService mailService,
-            IServerStorage serverStorage, ISenderStorage senderStorage, IRecipientStorage recipientStorage, IMessageStorage messageStorage)
+            IServerStorage serverStorage, ISenderStorage senderStorage, IRecipientStorage recipientStorage, IMessageStorage messageStorage, ISchedulerMailService schedulerMail)
         {
             _mailService = mailService;
             _serverStorage = serverStorage;
             _senderStorage = senderStorage;
             _recipientStorage = recipientStorage;
             _messageStorage = messageStorage;
+            _schedulerMail = schedulerMail;
             _timer = new Timer(100);
             _timer.Elapsed += OnTimerElapsed;
             _timer.AutoReset = true;
@@ -94,6 +96,14 @@ namespace WpfMailSenderCore.ViewModels
             get => _selectedMessage;
             set => Set(ref _selectedMessage, value);
         }
+        private DateTime _selectedDate = DateTime.Now;
+        public DateTime SelectedDate
+        {
+            get => _selectedDate;
+            set => Set(ref _selectedDate, value);
+        }
+
+
         /////////////////////////////////////////////////////////////////////////////////////////
         private string _recipientsFilter;
         public string RecipientsFilter

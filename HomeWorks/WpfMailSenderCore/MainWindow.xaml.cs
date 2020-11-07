@@ -32,7 +32,7 @@ namespace WpfMailSenderCore
             var debug = new DebugMailService();
             var two = debug.GetSender("smtp.mail.ru", 12, true, "gg", "tt");
             var one = scheduler.GetScheduler(two);
-            one.Send(DateTime.Now.AddSeconds(10), "from@mail.ru", "to@mail.ru", "123", "text");
+            one.AddTaskSend(DateTime.Now.AddSeconds(10), "from@mail.ru", "to@mail.ru", "123", "text");
         }
     }
 }

@@ -23,7 +23,7 @@ namespace MailSender.Services
             {
                 _mailSender = mailSender;
             }
-            public void Send(DateTime dateTimeSend, string from, string to, string title, string message)
+            public void AddTaskSend(DateTime dateTimeSend, string from, string to, string title, string message)
             {
                 _timer = new Timer(1000);
                 _timer.Elapsed += Timer_Tick;
@@ -33,7 +33,7 @@ namespace MailSender.Services
             }
             private void Timer_Tick(object sender, EventArgs e)
             {
-                if (DateTime.Now >= _dateTimeSend)
+                if (DateTime.Now > _dateTimeSend)
                 {
                     _mailSender.Send(_mailMessage.From.Address, _mailMessage.To.First().Address, _mailMessage.Subject, _mailMessage.Body);
                     _timer.Stop();

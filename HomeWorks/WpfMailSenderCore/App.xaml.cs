@@ -47,6 +47,8 @@ namespace WpfMailSenderCore
             //services.AddSingleton<ISenderStorage>(fileStorage);
             //services.AddSingleton<IRecipientStorage>(fileStorage);
             //services.AddSingleton<IMessageStorage>(fileStorage);
+            services.AddTransient<ISchedulerMailService, SchedulerMailService>();
+
         }
     }
 }
