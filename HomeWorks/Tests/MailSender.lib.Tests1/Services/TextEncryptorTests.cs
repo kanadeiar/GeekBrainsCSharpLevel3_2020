@@ -1,7 +1,7 @@
 ﻿using MailSender.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MailSender.lib.Tests1.Service
+namespace MailSender.lib.Tests1.Services
 {
     [TestClass]
     public class TextEncryptorTests
