@@ -6,6 +6,7 @@ using System.Timers;
 using MailSender.Interfaces;
 using MailSender.Models;
 using WpfMailSenderCore.ViewModels.Base;
+using static MailSender.Services.SchedulerMailService;
 
 namespace WpfMailSenderCore.ViewModels
 {
@@ -70,6 +71,12 @@ namespace WpfMailSenderCore.ViewModels
         {
             get => _messages;
             set => Set(ref _messages, value);
+        }
+        private ObservableCollection<SchedulerMailSender> _schedulerMailSenders;
+        public ObservableCollection<SchedulerMailSender> SchedulerMailSenders
+        {
+            get => _schedulerMailSenders;
+            set => Set(ref _schedulerMailSenders, value);
         }
         ///////////////////////////////////////////////////////////////////////////////////////////
         private Server _selectedServer;

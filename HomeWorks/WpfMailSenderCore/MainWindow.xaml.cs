@@ -34,5 +34,7 @@ namespace WpfMailSenderCore
             var one = scheduler.GetScheduler(two);
             one.AddTaskSend(DateTime.Now.AddSeconds(10), "from@mail.ru", "to@mail.ru", "123", "text");
         }
+
+
     }
 }

@@ -1,12 +1,15 @@
 ﻿using MailSender.Models;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WpfMailSenderCore.Infrastructure.Commands;
 using WpfMailSenderCore.Windows;
+using static MailSender.Services.SchedulerMailService;
 
 namespace WpfMailSenderCore.ViewModels
 {
@@ -41,6 +44,7 @@ namespace WpfMailSenderCore.ViewModels
             Senders = new ObservableCollection<Sender>(_senderStorage.Items);
             Recipients = new ObservableCollection<Recipient>(_recipientStorage.Items);
             Messages = new ObservableCollection<Message>(_messageStorage.Items);
+            SchedulerMailSenders = new ObservableCollection<SchedulerMailSender>();
             OnPropertyChanged(nameof(FilteredRecipients));
         }
         /// <summary> Команда сохранения данных </summary>
@@ -209,13 +213,15 @@ namespace WpfMailSenderCore.ViewModels
             client.Send(sender.Address, recipient.Address, message.Title, message.Body);
             StatisticViewModel.MessageSended();
         }
-
+        /// <summary> Команда запланирования отправки сообщения </summary>
+        public ICommand SchedulerSendMailMessageCommand => _schedulerSendMailMessageCommand
+            ??= new LambdaCommand(OnSchedulerSendMailMessageCommand, CanSchedulerSendMailMessageCommand);
         private ICommand _schedulerSendMailMessageCommand;
         private bool CanSchedulerSendMailMessageCommand(object p)
         {
-            return SelectedDate != null;
+            return SelectedDate != null && SelectedServer != null && SelectedSender != null && SelectedRecipient != null && SelectedMessage != null;
         }
-        private void OnShedulerSendMailMessageCommand(object p)
+        private void OnSchedulerSendMailMessageCommand(object p)
         {
             var server = SelectedServer;
             var client = _mailService.GetSender(server.Address, server.Port, server.UseSSL, server.Login, new NetworkCredential("", server.Password).Password);
@@ -225,8 +231,27 @@ namespace WpfMailSenderCore.ViewModels
             var message = SelectedMessage;
             var date = SelectedDate;
             scheduler.AddTaskSend(date, sender.Address, recipient.Address, message.Title, message.Body);
-            
+            var uiContext = SynchronizationContext.Current;
+            scheduler.EventSend += () => 
+            {
+                StatisticViewModel.MessageSended();
+                uiContext.Send(x => SchedulerMailSenders.Remove((SchedulerMailSender)scheduler), null);
+                //SchedulerMailSenders.Remove((SchedulerMailSender)scheduler);
+#if DEBUG
+                Debug.WriteLine($"Запланированное письмо отправлено!");
+#endif
+            };
+            SchedulerMailSenders.Add((SchedulerMailSender)scheduler);
         }
-
+        /// <summary> Команда удаления запланированной отправки сообщения </summary>
+        public ICommand DeleteSchedulerSendMailMessageCommand => _deleteSchedulerSendMailMessageCommand
+            ??= new LambdaCommand(OnDeleteSchedulerSendMailMessageCommand);
+        private ICommand _deleteSchedulerSendMailMessageCommand;
+        private void OnDeleteSchedulerSendMailMessageCommand(object p)
+        {
+            if (!(p is SchedulerMailSender scheduler))
+                return;
+            SchedulerMailSenders.Remove(scheduler);
+        }
     }
 }
