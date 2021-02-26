@@ -1,11 +1,12 @@
-﻿using MailSender.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using MailSender.Interfaces;
 using System.Diagnostics;
-using System.Text;
 
 namespace MailSender.Services
 {
+    /// <summary>
+    /// Тестовый сервис отправки письма по почте - реально только текст в дебажную консоль
+    /// </summary>
     public class DebugMailService : IMailService
     {
         public IMailSender GetSender(string address, int port, bool useSSL, string login, string password)
@@ -27,8 +28,14 @@ namespace MailSender.Services
             }
             public void Send(string from, string to, string title, string message)
             {
-                Debug.WriteLine($"Почтовый сервер {_address}:{_port}(ssl:{(_useSsl?"да":"нет")}[логин: {_login} - пароль: {_password}])");
-                Debug.WriteLine($"Отправка письма от {from} к {to} тема: {title} текст: {message}");
+                Debug.WriteLine($"Почтовый сервер {_address}:{_port}(ssl:{(_useSsl?"да":"нет")}[логин: {_login} - пароль: {_password}]), письмо отправлено от {from} к {to} тема: {title} текст: {message}");
+            }
+            public void Send(string from, IEnumerable<string> tos, string title, string message)
+            {
+                foreach (var to in tos)
+                {
+                    Send(from, to, title, message);
+                }
             }
         }
     }

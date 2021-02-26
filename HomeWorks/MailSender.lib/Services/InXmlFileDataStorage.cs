@@ -8,6 +8,9 @@ using System.Xml.Serialization;
 
 namespace MailSender.Services
 {
+    /// <summary>
+    /// Сохранение данных в XML файле
+    /// </summary>
     public class InXmlFileDataStorage : IServerStorage, ISenderStorage, IRecipientStorage, IMessageStorage
     {
         private readonly string _fileName;

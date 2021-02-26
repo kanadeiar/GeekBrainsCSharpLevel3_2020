@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using MailSender.Models;
 
 namespace WpfMailSenderCore.Windows
 {
@@ -9,6 +10,7 @@ namespace WpfMailSenderCore.Windows
     /// </summary>
     public partial class SenderEditWindow : Window
     {
+        public Sender Sender { get; set; }
         public SenderEditWindow()
         {
             InitializeComponent();
@@ -23,17 +25,27 @@ namespace WpfMailSenderCore.Windows
             var window = new SenderEditWindow
             {
                 Title = title,
-                TextBoxName = { Text = name },
-                TextBoxAddress = { Text = address },
-                TextBoxDescription = { Text = description },
+                Sender = new Sender
+                {
+                    Name = name,
+                    Address = address,
+                    Description = description,
+                },
+                //TextBoxName = { Text = name },
+                //TextBoxAddress = { Text = address },
+                //TextBoxDescription = { Text = description },
                 Owner = Application.Current.Windows.Cast<Window>()
                     .FirstOrDefault(win => win.IsActive),
             };
+            window.DockPanelSenderEdit.DataContext = window.Sender;
             if (window.ShowDialog() != true)
                 return false;
-            name = window.TextBoxName.Text;
-            address = window.TextBoxAddress.Text;
-            description = window.TextBoxDescription.Text;
+            name = window.Sender.Name;
+            address = window.Sender.Address;
+            description = window.Sender.Description;
+            //name = window.TextBoxName.Text;
+            //address = window.TextBoxAddress.Text;
+            //description = window.TextBoxDescription.Text;
             return true;
         }
         public static bool Create(out string name, out string address, out string description)

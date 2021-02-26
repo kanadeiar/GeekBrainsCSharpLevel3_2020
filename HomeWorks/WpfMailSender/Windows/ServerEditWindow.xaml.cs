@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using System.Net;
+using System.Security;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -28,7 +30,7 @@ namespace WpfMailSender.Windows
         }
 
         public static bool ShowDialog(string Title, ref string Name, ref string Address, ref int Port, ref bool UseSSL,
-            ref string Description, ref string Login, ref string Password)
+            ref string Description, ref string Login, ref SecureString Password)
         {
             var window = new ServerEditWindow
             {
@@ -38,7 +40,7 @@ namespace WpfMailSender.Windows
                 TextBoxServerPort = {Text = Port.ToString()},
                 CheckBoxServerSSL = {IsChecked = UseSSL},
                 TextBoxLogin = {Text = Login},
-                PasswordBoxPassword = {Password = Password},
+                PasswordBoxPassword = {Password = new NetworkCredential("",Password).Password},
                 TextBoxDescription = {Text = Description},
                 Owner = Application
                     .Current
@@ -52,13 +54,13 @@ namespace WpfMailSender.Windows
             Port = int.Parse(window.TextBoxServerPort.Text);
             UseSSL = window.CheckBoxServerSSL.IsChecked == true;
             Login = window.TextBoxLogin.Text;
-            Password = window.PasswordBoxPassword.Password;
+            Password = window.PasswordBoxPassword.SecurePassword;
             Description = window.TextBoxDescription.Text;
             return true;
         }
 
         public static bool Create(out string Name, out string Address, out int Port, out bool UseSSL,
-            out string Description, out string Login, out string Password)
+            out string Description, out string Login, out SecureString Password)
         {
             Name = null;
             Address = null;
