@@ -22,6 +22,32 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <DockPanel>
+        <DockPanel.Resources>
+            <Style BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="TextBox">
+                <Setter Property="Margin" Value="0,0,5,0"/>
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <DockPanel>
+                                <TextBlock DockPanel.Dock="Right" Text="!" FontSize="20" FontWeight="Bold" Margin="1,0" 
+                                           Padding="3,0" Foreground="Red" Background="Yellow" VerticalAlignment="Center"
+                                           ToolTip="{Binding AdornedElement.(Validation.Errors)[0].ErrorContent, ElementName=ErrorVisualElement}"/>
+                                <Border Padding="2" BorderBrush="Red" BorderThickness="3" CornerRadius="3">
+                                    <AdornedElementPlaceholder Name="ErrorVisualElement"/>
+                                </Border>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError" Value="True">
+                        <Setter Property="Background" Value="Pink"/>
+                        <Setter Property="ToolTip"
+                                Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </DockPanel.Resources>
         <Menu DockPanel.Dock="Top" HorizontalAlignment="Left">
             <MenuItem Header="Файл">
                 <MenuItem Header="Создать"/>
@@ -35,8 +61,15 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Сервис">
+                <MenuItem Header="Параметры" IsEnabled="False"/>
+                <Separator/>
+                <MenuItem Header="Отправить сейчас" Command="{Binding SendMessageCommand}"/>
+                <Separator/>
                 <MenuItem Header="Загрузить данные" Command="{Binding LoadDataCommand}"/>
                 <MenuItem Header="Сохранить данные" Command="{Binding SaveDataCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Разработка">
+                <MenuItem Header="Тест шифрования" Click="MenuItem_OnClick"/>
             </MenuItem>
             <MenuItem Header="Помощь">
                 <MenuItem Header="Справка по программе" Command="{Binding Path=ShowDialogCommand}" CommandParameter
@@ -150,7 +183,14 @@
                             </Button>
                         </ToolBar>
                     </ToolBarTray>
-                    <views:RecipientsListView Grid.Row="1" Grid.ColumnSpan="2"/>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <views:RecipientView Grid.Column="0"/>
+                        <views:RecipientEditor Grid.Column="1"/>
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Name="TabItemPlan" Header="Планировщик" MinHeight="30">
@@ -162,11 +202,11 @@
                     <GroupBox Grid.Column="0" Header="Планирование" Margin="0,0,3,0">
                         <StackPanel>
                             <TextBlock Text="Дата и время задания" HorizontalAlignment="Center"/>
-                            <DatePicker materialDesign:HintAssist.Hint="Выберите дату" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Language="ru-RU"/>
+                            <DatePicker SelectedDate="{Binding SelectedDate}" materialDesign:HintAssist.Hint="Выберите дату" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Language="ru-RU"/>
                             <!--<Calendar Name="CalendarPlan" SelectedDate="2020-09-05" Language="ru-RU"/>-->
-                            <materialDesign:TimePicker materialDesign:HintAssist.Hint="Выберите время"/>
+                            <materialDesign:TimePicker SelectedTime="{Binding SelectedDate}" materialDesign:HintAssist.Hint="Выберите время"/>
                             <UniformGrid Columns="1" Margin="5">
-                                <Button x:Name="ButtinSendPlan" Margin="0,0,0,4">
+                                <Button x:Name="ButtonSendPlan" Margin="0,0,0,4" Command="{Binding Path=SchedulerSendMailMessageCommand}">
                                     <StackPanel Orientation="Horizontal">
                                         <fa:FontAwesome Icon="Regular_Clock" Margin="0,0,5,0" Foreground="Aqua"/>
                                         <TextBlock>Запланировать</TextBlock>
@@ -182,33 +222,25 @@
                         </StackPanel>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Header="Задания">
-                        <ListBox>
-                            <ListBoxItem HorizontalContentAlignment="Stretch">
-                                <Border BorderBrush="Green" BorderThickness="1" Padding="4" CornerRadius="4">
-                                    <Grid>
-                                        <StackPanel>
-                                            <TextBlock Text="Дата: 01.12.2020"/>
-                                            <TextBlock Text="Отправитель: Админ"/>
-                                            <TextBlock Text="Получатель: Пользователь"/>
-                                            <TextBlock Text="Тема письма: Тест"/>
-                                        </StackPanel>
-                                        <Button VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10,0" ToolTip="Удалить" Content="x"/>
-                                    </Grid>
-                                </Border>
-                            </ListBoxItem>
-                            <ListBoxItem HorizontalContentAlignment="Stretch">
-                                <Border BorderBrush="Green" BorderThickness="1" Padding="4" CornerRadius="4">
-                                    <Grid>
-                                        <StackPanel>
-                                            <TextBlock Text="Дата: 01.12.2020"/>
-                                            <TextBlock Text="Отправитель: Админ"/>
-                                            <TextBlock Text="Получатель: Пользователь"/>
-                                            <TextBlock Text="Тема письма: Тест"/>
-                                        </StackPanel>
-                                        <Button VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10,0" ToolTip="Удалить" Content="x"/>
-                                    </Grid>
-                                </Border>
-                            </ListBoxItem>
+                        <ListBox Name="SchedulersListBox" ItemsSource="{Binding Path=SchedulerMailSenders}" HorizontalContentAlignment="Stretch">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="Green" BorderThickness="1" Padding="4" CornerRadius="4">
+                                        <Grid>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Path=DateTimeSend, StringFormat=Запланированная дата отправки: {0}}"/>
+                                                <TextBlock Text="{Binding Path=MailMessageFromAddress, StringFormat=Адрес отправителя: {0}}"/>
+                                                <TextBlock Text="{Binding Path=MailMessageToAddress, StringFormat=Адрес получателя: {0}}"/>
+                                                <TextBlock Text="{Binding Path=MailMessageTitle, StringFormat=Заголовок: {0}}"/>
+                                            </StackPanel>
+                                            <Button 
+                                                VerticalAlignment="Top" HorizontalAlignment="Right" Padding="10,0" ToolTip="Удалить" Content="x"
+                                                Command="{Binding ElementName=SchedulersListBox, Path=DataContext.DeleteSchedulerSendMailMessageCommand}" 
+                                                CommandParameter="{Binding}"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
                         </ListBox>
                     </GroupBox>
                     <GridSplitter Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="3"/>
@@ -231,11 +263,11 @@
                         </ListBox>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Grid.Row="0" Header="Заголовок письма">
-                        <TextBox Text="{Binding SelectedItem.Title, ElementName=ListBoxMessages}"/>
+                        <TextBox Text="{Binding SelectedItem.Title, ElementName=ListBoxMessages, ValidatesOnDataErrors=True}"/>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Grid.Row="1" Header="Текст письма">
-                        <TextBox Name="TextBoxMailMessage" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" Background="White"
-                                 Text="{Binding SelectedItem.Body, ElementName=ListBoxMessages}"/>
+                        <TextBox Name="TextBoxMailMessage" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
+                                 Text="{Binding SelectedItem.Body, ElementName=ListBoxMessages, ValidatesOnDataErrors=True}"/>
                     </GroupBox>
                 </Grid>
             </TabItem>
@@ -268,7 +300,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Grid.Row="0" Text="Отправлено писем: "/>
-                        <TextBlock Grid.Column="1" Grid.Row="0" Text="0 шт."/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=StatisticViewModel.SendMessagesCount, StringFormat={}{0} шт.}"/>
                         <TextBlock Grid.Column="0" Grid.Row="1" Text="Всего отправителей: "/>
                         <TextBlock Grid.Column="1" Grid.Row="1" Text="0 шт."/>
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Всего получателей: "/>

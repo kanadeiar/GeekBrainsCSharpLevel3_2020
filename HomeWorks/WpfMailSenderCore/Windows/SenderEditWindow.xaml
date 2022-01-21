@@ -6,23 +6,47 @@
         xmlns:local="clr-namespace:WpfMailSenderCore.Windows"
         mc:Ignorable="d"
         Title="Отправитель" 
-        Height="350" Width="300" WindowStartupLocation="CenterOwner">
-    <DockPanel Margin="5">
+        Height="350" Width="300" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+    <DockPanel Margin="5" Name="DockPanelSenderEdit">
         <DockPanel.Resources>
+            <Style BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="TextBox">
+                <Setter Property="Margin" Value="0,0,5,0"/>
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <DockPanel>
+                                <TextBlock DockPanel.Dock="Right" Text="!" FontSize="20" FontWeight="Bold" Margin="1,0" 
+                                           Padding="3,0" Foreground="Red" Background="Yellow" VerticalAlignment="Center"
+                                           ToolTip="{Binding AdornedElement.(Validation.Errors)[0].ErrorContent, ElementName=ErrorVisualElement}"/>
+                                <Border Padding="2" BorderBrush="Red" BorderThickness="3" CornerRadius="3">
+                                    <AdornedElementPlaceholder Name="ErrorVisualElement"/>
+                                </Border>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError" Value="True">
+                        <Setter Property="Background" Value="Pink"/>
+                        <Setter Property="ToolTip"
+                                Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </DockPanel.Resources>
         <UniformGrid DockPanel.Dock="Bottom" Rows="1" HorizontalAlignment="Left" Margin="10"
                      Button.Click="ButtonBase_Click">
-            <Button Content="Ok" IsDefault="True"/>
-            <Button Content="Отмена" IsCancel="True"/>
+            <Button Content="Ok" IsDefault="True" Margin="5,0"/>
+            <Button Content="Отмена" IsCancel="True" Margin="5,0"/>
         </UniformGrid>
         <GroupBox Header="Имя" DockPanel.Dock="Top">
-            <TextBox Name="TextBoxName" x:FieldModifier="private"/>
+            <TextBox Name="TextBoxName" Text="{Binding Path=Name, ValidatesOnDataErrors=True}" x:FieldModifier="private"/>
         </GroupBox>
         <GroupBox Header="Адрес" DockPanel.Dock="Top">
-            <TextBox Name="TextBoxAddress"/>
+            <TextBox Name="TextBoxAddress" Text="{Binding Path=Address, ValidatesOnDataErrors=True}"/>
         </GroupBox>
         <GroupBox Header="Описание">
-            <TextBox Name="TextBoxDescription"/>
+            <TextBox Name="TextBoxDescription" Text="{Binding Path=Description, ValidatesOnDataErrors=True}"/>
         </GroupBox>
     </DockPanel>
 </Window>

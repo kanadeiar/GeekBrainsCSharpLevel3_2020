@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace WpfMailSenderCore.Views
 {
     /// <summary>
-    /// Логика взаимодействия для RecipientsListView.xaml
+    /// Логика взаимодействия для RecipientView.xaml
     /// </summary>
-    public partial class RecipientsListView : UserControl
+    public partial class RecipientView : UserControl
     {
-        public RecipientsListView()
+        public RecipientView()
         {
             InitializeComponent();
         }
